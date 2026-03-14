@@ -259,25 +259,25 @@ function HomeContent() {
     id: 1,
     name: "Ayesha T.",
     role: "Verified Client",
-    // Unsplash link for a professional South Asian female look
     image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=150&q=80",
-    review: "Bohat acha experience raha. The staff was extremely professional, kind, and very attentive. Appointment book karna bhi bohat asan tha."
+    // Yahan 'review' ko change kar ke 'quote' kar diya hai
+    quote: "Bohat acha experience raha. The staff was extremely professional, kind, and very attentive. Appointment book karna bhi bohat asan tha."
   },
   {
     id: 2,
     name: "Usman Ali",
     role: "Verified Client",
-    // Unsplash link for a professional male look
     image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&q=80",
-    review: "The WhatsApp booking process was smooth and hassle-free. Clinic ka mahol bohat saaf tha aur treatment quality excellent thi."
+    // Yahan bhi 'quote' kar diya hai
+    quote: "The WhatsApp booking process was smooth and hassle-free. Clinic ka mahol bohat saaf tha aur treatment quality excellent thi."
   },
   {
     id: 3,
     name: "Fatima R.",
     role: "Verified Client",
-    // Unsplash link for another professional female look
     image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80",
-    review: "Highly recommended if you want trusted healthcare professionals in the city. Waqt par checkup hua aur service bohat zabardast thi."
+    // Yahan bhi 'quote' kar diya hai
+    quote: "Highly recommended if you want trusted healthcare professionals in the city. Waqt par checkup hua aur service bohat zabardast thi."
   }
 ];
 
