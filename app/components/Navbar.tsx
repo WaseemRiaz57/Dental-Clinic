@@ -21,15 +21,15 @@ export default function Navbar() {
     categoryIcons[category.toLowerCase()] || "local_hospital";
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+    <nav className="sticky top-0 z-50 w-full border-b border-[#4DB8E8]/20 bg-white/90 backdrop-blur-md shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-18 py-3">
           {/* Logo */}
-          <DynamicLink href="/" className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary text-3xl">
+          <DynamicLink href="/" className="flex items-center gap-2.5">
+            <span className="material-symbols-outlined text-[#2E7EC4] text-3xl">
               {icon}
             </span>
-            <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+            <span className="stitch-title text-xl font-bold tracking-tight uppercase text-[#1B3A6B]">
               {client}
             </span>
           </DynamicLink>
@@ -44,10 +44,10 @@ export default function Navbar() {
               <DynamicLink
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium transition-colors ${
+                className={`text-sm font-semibold tracking-wide transition-colors ${
                   pathname === link.href
-                    ? "text-primary"
-                    : "hover:text-primary text-slate-700 dark:text-slate-300"
+                    ? "text-[#2E7EC4] border-b-2 border-[#2E7EC4] pb-0.5"
+                    : "text-[#1B3A6B]/85 hover:text-[#2E7EC4]"
                 }`}
               >
                 {link.label}
@@ -55,7 +55,7 @@ export default function Navbar() {
             ))}
             <DynamicLink
               href="/booking"
-              className="bg-primary hover:bg-primary/90 text-white px-5 py-2 rounded-lg text-sm font-bold transition-all"
+              className="bg-[#1B3A6B] hover:bg-[#2E7EC4] text-white px-6 py-2.5 rounded-[10px] text-sm font-bold transition-all editorial-shadow"
             >
               Book Appointment
             </DynamicLink>
@@ -65,7 +65,7 @@ export default function Navbar() {
           <div className="md:hidden flex items-center gap-2">
             <DynamicLink
               href="/booking"
-              className="bg-primary hover:bg-primary/90 text-white px-3 py-1.5 rounded-md text-xs font-bold transition-all"
+              className="bg-[#1B3A6B] hover:bg-[#2E7EC4] text-white px-4 py-2 rounded-[10px] text-xs font-bold transition-all"
             >
               Book
             </DynamicLink>

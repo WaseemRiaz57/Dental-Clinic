@@ -58,7 +58,7 @@ function BookingContent() {
   };
 
   const options =
-    serviceOptions[category.toLowerCase()] || serviceOptions["healthcare"];
+    serviceOptions[category.toLowerCase()] || serviceOptions.healthcare;
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -88,175 +88,153 @@ Please confirm my booking. Thank you!`;
   };
 
   return (
-    <div className="min-h-screen flex items-start justify-center px-4 py-10 pb-24">
-      <div className="relative w-full max-w-lg bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-2xl">
-        {/* Header */}
-        <div className="flex items-center p-4 border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md">
-          <h2 className="text-lg font-semibold flex-1 text-center text-slate-900 dark:text-white">
-            Book Appointment
-          </h2>
-        </div>
-
-        {/* Form */}
-        <div className="p-6 md:p-8">
-          <div className="mb-8">
-            <h3 className="text-2xl font-bold tracking-tight mb-2 text-slate-900 dark:text-white">
-              Schedule your visit
-            </h3>
-            <p className="text-slate-500 dark:text-slate-400">
-              Fill in your details to confirm your appointment with {client}.
+    <section className="min-h-screen px-4 py-12 pb-28 mesh-accent">
+      <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 items-stretch">
+        <aside className="bg-[#1B3A6B] text-white rounded-[24px] p-8 md:p-10 editorial-shadow relative overflow-hidden reveal-up reveal-delay-1">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(77,184,232,0.25),transparent_45%)]" />
+          <div className="relative z-10">
+            <p className="text-xs uppercase tracking-[0.2em] text-white/70 mb-4">Appointment Desk</p>
+            <h1 className="stitch-title text-white text-4xl font-bold mb-5">Book Your Visit</h1>
+            <p className="text-white/80 leading-relaxed mb-8">
+              Confirm your preferred service and schedule. Your WhatsApp request will be sent instantly to {client}.
             </p>
-          </div>
-
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 gap-6">
-              {/* Full Name */}
-              <label className="block">
-                <span className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
-                  Full Name
-                </span>
-                <div className="relative">
-                  <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">
-                    person
-                  </span>
-                  <input
-                    className="block w-full pl-10 pr-3 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-slate-900 dark:text-white"
-                    placeholder="Jane Doe"
-                    type="text"
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-              </label>
-
-              {/* Phone & Email */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <label className="block">
-                  <span className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
-                    Phone Number
-                  </span>
-                  <div className="relative">
-                    <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">
-                      call
-                    </span>
-                    <input
-                      className="block w-full pl-10 pr-3 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-slate-900 dark:text-white"
-                      placeholder="+1 (555) 000-0000"
-                      type="tel"
-                      name="phone"
-                      value={form.phone}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                </label>
-                <label className="block">
-                  <span className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
-                    Email Address
-                  </span>
-                  <div className="relative">
-                    <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">
-                      mail
-                    </span>
-                    <input
-                      className="block w-full pl-10 pr-3 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-slate-900 dark:text-white"
-                      placeholder="jane@example.com"
-                      type="email"
-                      name="email"
-                      value={form.email}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                </label>
+            <div className="space-y-5 text-sm">
+              <div className="flex items-start gap-3">
+                <span className="material-symbols-outlined text-[#4DB8E8]">verified</span>
+                Certified and experienced specialists
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="material-symbols-outlined text-[#4DB8E8]">schedule</span>
+                Flexible timings based on availability
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="material-symbols-outlined text-[#4DB8E8]">chat</span>
+                Direct WhatsApp confirmation workflow
               </div>
             </div>
-
-            {/* Service Select */}
-            <label className="block">
-              <span className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
-                Select Service
-              </span>
-              <div className="relative">
-                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">
-                  medical_services
-                </span>
-                <select
-                  className="block w-full pl-10 pr-10 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg appearance-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-slate-600 dark:text-slate-300"
-                  name="service"
-                  value={form.service}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">Choose a treatment...</option>
-                  {options.map((opt) => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
-                <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg pointer-events-none">
-                  expand_more
-                </span>
+            <div className="stitch-divider my-8 bg-white/20" />
+            <div className="space-y-4 text-sm text-white/80">
+              <div className="flex items-start gap-3">
+                <span className="material-symbols-outlined text-[#4DB8E8]">call</span>
+                {phone || "Phone number available via query parameter"}
               </div>
+              <div className="flex items-start gap-3">
+                <span className="material-symbols-outlined text-[#4DB8E8]">schedule</span>
+                Mon - Sat: 9:00 AM - 6:00 PM
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <div className="stitch-card p-6 md:p-10 reveal-up reveal-delay-2">
+          <h2 className="stitch-title text-3xl font-bold mb-2">Schedule your appointment</h2>
+          <p className="text-[#44474f] mb-7">Fill in your details below.</p>
+
+          <form className="space-y-5" onSubmit={handleSubmit}>
+            <label className="block">
+              <span className="block text-xs font-bold uppercase tracking-widest text-[#44474f] mb-2">Full Name</span>
+              <input
+                className="w-full rounded-[10px] border-0 bg-[#f0f4fb] px-4 py-3 focus:ring-2 focus:ring-[#2E7EC4]/30"
+                placeholder="Jane Doe"
+                type="text"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                required
+              />
             </label>
 
-            {/* Date & Time */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <label className="block">
-                <span className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
-                  Preferred Date
-                </span>
-                <div className="relative">
-                  <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">
-                    calendar_today
-                  </span>
-                  <input
-                    className="block w-full pl-10 pr-3 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-slate-900 dark:text-white"
-                    type="date"
-                    name="date"
-                    value={form.date}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
+                <span className="block text-xs font-bold uppercase tracking-widest text-[#44474f] mb-2">Phone Number</span>
+                <input
+                  className="w-full rounded-[10px] border-0 bg-[#f0f4fb] px-4 py-3 focus:ring-2 focus:ring-[#2E7EC4]/30"
+                  placeholder="+1 (555) 000-0000"
+                  type="tel"
+                  name="phone"
+                  value={form.phone}
+                  onChange={handleChange}
+                  required
+                />
               </label>
+
               <label className="block">
-                <span className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
-                  Preferred Time
-                </span>
-                <div className="relative">
-                  <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">
-                    schedule
-                  </span>
-                  <input
-                    className="block w-full pl-10 pr-3 py-3 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-slate-900 dark:text-white"
-                    type="time"
-                    name="time"
-                    value={form.time}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
+                <span className="block text-xs font-bold uppercase tracking-widest text-[#44474f] mb-2">Email Address</span>
+                <input
+                  className="w-full rounded-[10px] border-0 bg-[#f0f4fb] px-4 py-3 focus:ring-2 focus:ring-[#2E7EC4]/30"
+                  placeholder="jane@example.com"
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                />
               </label>
             </div>
 
-            {/* Submit */}
-            <div className="pt-4">
-              <button
-                className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 px-6 rounded-lg shadow-lg shadow-primary/20 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
-                type="submit"
+            <label className="block">
+              <span className="block text-xs font-bold uppercase tracking-widest text-[#44474f] mb-2">Desired Service</span>
+              <select
+                className="w-full rounded-[10px] border-0 bg-[#f0f4fb] px-4 py-3 focus:ring-2 focus:ring-[#2E7EC4]/30"
+                name="service"
+                value={form.service}
+                onChange={handleChange}
+                required
               >
-                <span className="material-symbols-outlined">send</span>
-                Confirm Booking via WhatsApp
-              </button>
+                <option value="">Choose a treatment...</option>
+                {options.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <label className="block">
+                <span className="block text-xs font-bold uppercase tracking-widest text-[#44474f] mb-2">Date</span>
+                <input
+                  className="w-full rounded-[10px] border-0 bg-[#f0f4fb] px-4 py-3 focus:ring-2 focus:ring-[#2E7EC4]/30"
+                  type="date"
+                  name="date"
+                  value={form.date}
+                  onChange={handleChange}
+                  required
+                />
+              </label>
+
+              <label className="block">
+                <span className="block text-xs font-bold uppercase tracking-widest text-[#44474f] mb-2">Preferred Time</span>
+                <input
+                  className="w-full rounded-[10px] border-0 bg-[#f0f4fb] px-4 py-3 focus:ring-2 focus:ring-[#2E7EC4]/30"
+                  type="time"
+                  name="time"
+                  value={form.time}
+                  onChange={handleChange}
+                  required
+                />
+              </label>
             </div>
+
+            <button
+              className="w-full bg-[#002452] hover:bg-[#1B3A6B] text-white font-bold py-4 px-6 rounded-[10px] transition-all"
+              type="submit"
+            >
+              Confirm Booking via WhatsApp
+            </button>
+
+            <a
+              href={`https://wa.me/${phone}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full bg-[#25D366] hover:opacity-90 text-white font-bold py-4 px-6 rounded-[10px] transition-all inline-flex justify-center"
+            >
+              Chat on WhatsApp
+            </a>
           </form>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -265,7 +243,7 @@ export default function BookingPage() {
     <Suspense
       fallback={
         <div className="flex items-center justify-center min-h-screen">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#002452]" />
         </div>
       }
     >
