@@ -1,27 +1,12 @@
 import type { Metadata } from "next";
-import { Manrope, Noto_Serif } from "next/font/google";
 import { Suspense } from "react";
 import Navbar from "./components/Navbar";
-import BottomNav from "./components/BottomNav";
-import WhatsAppButton from "./components/WhatsAppButton";
 import "./globals.css";
 
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-});
-
-const notoSerif = Noto_Serif({
-  variable: "--font-noto-serif",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-});
-
 export const metadata: Metadata = {
-  title: "Premium Services — Book Now",
+  title: "SAEED DENTAL CARE | High-End Medical Editorial",
   description:
-    "Experience top-notch professional services with a commitment to excellence.",
+    "Experience world-class dental solutions with a touch of editorial elegance. We combine clinical precision with patient-centric comfort.",
 };
 
 export default function RootLayout({
@@ -30,19 +15,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="light" suppressHydrationWarning>
-      <body className={`${manrope.variable} ${notoSerif.variable} font-sans antialiased`}>
+    <html lang="en" className="scroll-smooth light" suppressHydrationWarning>
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&family=DM+Sans:wght@400;500;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@400;500;600;700&display=swap"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        />
+      </head>
+      <body className="bg-background font-body text-on-surface antialiased">
         <div className="min-h-screen flex flex-col">
           <Suspense fallback={null}>
             <Navbar />
           </Suspense>
           <main className="flex-1">{children}</main>
-          <Suspense fallback={null}>
-            <BottomNav />
-          </Suspense>
-          <Suspense fallback={null}>
-            <WhatsAppButton />
-          </Suspense>
         </div>
       </body>
     </html>
