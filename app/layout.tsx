@@ -4,7 +4,10 @@ import Navbar from "./components/Navbar";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SAEED DENTAL CARE | High-End Medical Editorial",
+  title: {
+    default: "Elite Dental Solutions",
+    template: "%s",
+  },
   description:
     "Experience world-class dental solutions with a touch of editorial elegance. We combine clinical precision with patient-centric comfort.",
 };

@@ -1,8 +1,26 @@
+import type { Metadata } from "next";
+
 /* ═══════════════════════════════════════════════════════════
    PIXEL-PERFECT STITCH REPLICA — 100% DYNAMIC
    Matches: projects/6076570405638608677/screens/142db5f0da084108b7a5e50c0ca5d521
    All clinic data injected via URL searchParams.
    ═══════════════════════════════════════════════════════════ */
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}): Promise<Metadata> {
+  const params = await searchParams;
+  const clinicName = params.client
+    ? String(params.client).replace(/-/g, " ")
+    : "Premium Dental Care";
+
+  return {
+    title: `${clinicName} | Elite Dental Solutions`,
+    description: `Book your appointment at ${clinicName} today.`,
+  };
+}
 
 export default async function Home({
   searchParams,
@@ -29,6 +47,7 @@ export default async function Home({
 
   // Text Data with Fallbacks
   const clinicName = getParam("client", "Premium Dental Care");
+  const logoUrl = params.logo_url ? String(params.logo_url) : null;
   const phone = getParam("phone", "+92 300 0000000");
   const address = getParam("address", "Main Boulevard, Healthcare District, Lahore");
   const email =
@@ -779,7 +798,18 @@ export default async function Home({
       <footer className="bg-[#1B3A6B] text-white w-full pt-16 pb-8 border-t border-white/10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 px-8 max-w-7xl mx-auto">
           <div>
-            <div className="stitch-display !text-white text-2xl font-bold mb-6 uppercase">{clinicName}</div>
+            <div className="stitch-display !text-white text-2xl font-bold mb-6 uppercase flex items-center">
+              {logoUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={logoUrl}
+                  alt={`${clinicName} Logo`}
+                  className="h-10 w-auto object-contain"
+                />
+              ) : (
+                clinicName
+              )}
+            </div>
             <p className="text-sm leading-relaxed text-white/70 mb-8 max-w-xs">
               {footerTagline}
             </p>
