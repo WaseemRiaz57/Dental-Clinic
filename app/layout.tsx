@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import Navbar from "./components/Navbar";
+import ScrollRevealObserver from "../components/ScrollRevealObserver";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -30,6 +31,7 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-background font-body text-on-surface antialiased">
+        <ScrollRevealObserver />
         <div className="min-h-screen flex flex-col">
           <Suspense fallback={null}>
             <Navbar />

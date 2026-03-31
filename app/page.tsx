@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import AnimatedStat from "../components/AnimatedStat";
 
 /* ═══════════════════════════════════════════════════════════
    PIXEL-PERFECT STITCH REPLICA — 100% DYNAMIC
@@ -123,31 +124,43 @@ export default async function Home({
     {
       icon: "dentistry",
       title: "General Dentistry",
+      image:
+        "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=800&q=80",
       desc: "Regular checkups and cleanings to maintain your oral health foundation and prevent future issues.",
     },
     {
       icon: "auto_awesome",
       title: "Teeth Whitening",
+      image:
+        "https://images.unsplash.com/photo-1598256989800-efbf1bc0af41?auto=format&fit=crop&w=800&q=80",
       desc: "Professional bleaching systems that deliver noticeable results safely and effectively in just one visit.",
     },
     {
       icon: "orthopedics",
       title: "Braces & Aligners",
+      image:
+        "https://images.unsplash.com/photo-1588776814546-daab30f310ce?auto=format&fit=crop&w=800&q=80",
       desc: "Modern orthodontic solutions including clear aligners and traditional braces for a perfectly aligned smile.",
     },
     {
       icon: "medical_services",
       title: "Dental Implants",
+      image:
+        "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=800&q=80",
       desc: "Permanent, natural-looking tooth replacements that restore both function and facial aesthetics.",
     },
     {
       icon: "clinical_notes",
       title: "Veneers",
+      image:
+        "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=800&q=80",
       desc: "Custom-crafted porcelain shells to cover imperfections and create a flawless, Hollywood-style smile.",
     },
     {
       icon: "health_metrics",
       title: "Root Canal",
+      image:
+        "https://images.unsplash.com/photo-1625134673337-519d8cdfe4dc?auto=format&fit=crop&w=800&q=80",
       desc: "Gentle, pain-free endodontic therapy to save natural teeth and eliminate infection at the root.",
     },
   ];
@@ -155,6 +168,7 @@ export default async function Home({
   const services = defaultServices.map((item, index) => ({
     icon: getParam(`service_${index + 1}_icon`, item.icon),
     title: getParam(`service_${index + 1}_title`, item.title),
+    image: getParam(`service_${index + 1}_image`, item.image),
     desc: getParam(`service_${index + 1}_desc`, item.desc),
   }));
 
@@ -231,6 +245,20 @@ export default async function Home({
   const galleryImageAlt4 = getParam("gallery_image_alt_4", "X-ray Room");
 
   const testimonialsTitle = getParam("testimonials_title", "Voices of Reassurance");
+  const testimonialAvatars = [
+    getParam(
+      "testimonial_1_avatar",
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80"
+    ),
+    getParam(
+      "testimonial_2_avatar",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+    ),
+    getParam(
+      "testimonial_3_avatar",
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80"
+    ),
+  ];
   const testimonials = [
     {
       name: getParam("testimonial_1_name", "Hamza Ali"),
@@ -458,13 +486,21 @@ export default async function Home({
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((svc, idx) => (
-              <div key={svc.title} className={`group bg-[#f0f4fb] p-8 rounded-[16px] border-l-4 border-transparent hover:border-[#0061a2] transition-all duration-300 reveal-up reveal-delay-${(idx % 3) + 1}`}>
-                <span className="material-symbols-outlined text-4xl text-[#0061a2] mb-6 block">{svc.icon}</span>
-                <h3 className="text-xl font-bold text-[#002452] mb-4">{svc.title}</h3>
-                <p className="text-[#44474f] text-sm leading-relaxed mb-6">{svc.desc}</p>
-                <a className="text-[#0061a2] font-bold text-xs uppercase tracking-widest flex items-center gap-2" href="#">
-                  {serviceExploreText} <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                </a>
+              <div key={svc.title} className={`group bg-[#f0f4fb] rounded-[16px] overflow-hidden border border-[#4DB8E8]/20 hover:border-[#0061a2]/40 transition-all duration-300 reveal-up reveal-delay-${(idx % 3) + 1}`}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={svc.image}
+                  alt={`${svc.title} service`}
+                  className="h-48 w-full object-cover rounded-t-[16px]"
+                />
+                <div className="p-8">
+                  <span className="material-symbols-outlined text-4xl text-[#0061a2] mb-6 block">{svc.icon}</span>
+                  <h3 className="text-xl font-bold text-[#002452] mb-4">{svc.title}</h3>
+                  <p className="text-[#44474f] text-sm leading-relaxed mb-6">{svc.desc}</p>
+                  <a className="text-[#0061a2] font-bold text-xs uppercase tracking-widest flex items-center gap-2" href="#">
+                    {serviceExploreText} <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                  </a>
+                </div>
               </div>
             ))}
           </div>
@@ -480,8 +516,7 @@ export default async function Home({
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-24 text-center reveal-up">
             {whyStats.map((stat) => (
               <div key={stat.label} className="p-4">
-                <div className="text-5xl font-bold mb-2 stitch-display !text-white">{stat.value}</div>
-                <div className="text-white/70 text-sm uppercase tracking-widest">{stat.label}</div>
+                <AnimatedStat value={stat.value} label={stat.label} />
               </div>
             ))}
           </div>
@@ -636,7 +671,12 @@ export default async function Home({
                 </div>
                 <p className="text-[#171c21] text-lg leading-relaxed mb-8">&ldquo;{item.quote}&rdquo;</p>
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#dfe3ea]" />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={testimonialAvatars[idx]}
+                    alt={`${item.name} profile`}
+                    className="w-12 h-12 rounded-full object-cover border-2 border-[#4DB8E8]"
+                  />
                   <div>
                     <div className="font-bold text-[#002452]">{item.name}</div>
                     <div className="text-xs text-[#44474f] uppercase font-bold">{item.role}</div>
