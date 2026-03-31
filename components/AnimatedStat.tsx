@@ -1,73 +1,60 @@
 'use client';
+import { useEffect, useState, useRef } from 'react';
 
-import { useEffect, useRef, useState } from 'react';
-
-type AnimatedStatProps = {
-  value: string;
-  label: string;
-};
-
-export default function AnimatedStat({ value, label }: AnimatedStatProps) {
+export default function AnimatedStat({ value, label }: { value: string; label: string }) {
   const [count, setCount] = useState(0);
-  const [hasStarted, setHasStarted] = useState(false);
+  const [inView, setInView] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  const parts = value.match(/^(\D*)(\d+)(.*)$/);
-  const prefix = parts?.[1] ?? '';
-  const targetNumber = parts?.[2] ? parseInt(parts[2], 10) : 0;
-  const suffix = parts?.[3] ?? '';
+  // SAFE PARSING: "15k+" -> 15 and "k+" | "24/7" -> 24 and "/7" | "Modern" -> null and "Modern"
+  const match = String(value).match(/^(\d+)(.*)$/);
+  const isNumeric = !!match;
+  const targetNumber = isNumeric ? parseInt(match[1], 10) : 0;
+  const suffix = isNumeric ? match[2] : value;
 
   useEffect(() => {
-    const node = ref.current;
-    if (!node || targetNumber <= 0 || hasStarted) {
-      return;
-    }
-
-    let rafId = 0;
+    const element = ref.current;
+    if (!element) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting) {
-          return;
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect(); // Trigger only once
         }
-
-        setHasStarted(true);
-        const duration = 1800;
-        const startTime = performance.now();
-
-        const tick = (now: number) => {
-          const elapsed = now - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          const nextValue = Math.max(0, Math.round(progress * targetNumber));
-          setCount(nextValue);
-
-          if (progress < 1) {
-            rafId = requestAnimationFrame(tick);
-          }
-        };
-
-        rafId = requestAnimationFrame(tick);
-        observer.disconnect();
       },
-      { threshold: 0.45 }
+      { threshold: 0.1 }
     );
 
-    observer.observe(node);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
 
-    return () => {
-      observer.disconnect();
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-      }
-    };
-  }, [hasStarted, targetNumber]);
-
-  const displayValue = targetNumber > 0 ? `${prefix}${count}${suffix}` : value;
+  useEffect(() => {
+    if (inView && isNumeric && targetNumber > 0) {
+      let start = 0;
+      const duration = 2000; // 2 seconds
+      const increment = Math.max(1, Math.ceil(targetNumber / (duration / 16)));
+      
+      const timer = setInterval(() => {
+        start += increment;
+        if (start >= targetNumber) {
+          setCount(targetNumber);
+          clearInterval(timer);
+        } else {
+          setCount(start);
+        }
+      }, 16);
+      return () => clearInterval(timer);
+    }
+  }, [inView, isNumeric, targetNumber]);
 
   return (
     <div ref={ref} className="text-center group">
-      <h3 className="text-5xl font-bold mb-2 stitch-display !text-white">{displayValue}</h3>
-      <p className="text-white/70 text-sm uppercase tracking-widest">{label}</p>
+      <h3 className="text-4xl lg:text-5xl font-extrabold text-white mb-2 drop-shadow-md transition-all duration-300">
+        {isNumeric ? `${count}${suffix}` : value}
+      </h3>
+      <p className="text-white/80 text-sm font-bold uppercase tracking-widest">{label}</p>
     </div>
   );
 }

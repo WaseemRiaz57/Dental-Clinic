@@ -46,9 +46,23 @@ export default async function Home({
     return ["1", "true", "yes", "y"].includes(String(value).toLowerCase());
   };
 
+  const getSafeImageUrl = (url: string) => {
+    if (!url || url.startsWith("/") || url.startsWith("data:") || url.startsWith("blob:")) {
+      return url;
+    }
+
+    try {
+      const parsed = new URL(url);
+      const sourcePath = `${parsed.host}${parsed.pathname}${parsed.search}`;
+      return `https://images.weserv.nl/?url=${encodeURIComponent(sourcePath)}&output=webp&q=82`;
+    } catch {
+      return url;
+    }
+  };
+
   // Text Data with Fallbacks
   const clinicName = getParam("client", "Premium Dental Care");
-  const logoUrl = params.logo_url ? String(params.logo_url) : null;
+  const logoUrl = params.logo_url ? getSafeImageUrl(String(params.logo_url)) : null;
   const phone = getParam("phone", "+92 300 0000000");
   const address = getParam("address", "Main Boulevard, Healthcare District, Lahore");
   const email =
@@ -58,24 +72,41 @@ export default async function Home({
     );
 
   // Image Data with Fallbacks
-  const heroImage = getParam(
-    "hero_image",
-    "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=1920&q=80"
+  const heroImage = getSafeImageUrl(
+    getParam(
+      "hero_image",
+      "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=1920&q=80"
+    )
   );
-  const sectionImage1 = getParam(
-    "section_image_1",
-    "https://images.unsplash.com/photo-1588776814546-ec7e3f5d4f2c?auto=format&fit=crop&w=800&q=80"
+  const sectionImage1 = getSafeImageUrl(
+    getParam(
+      "section_image_1",
+      "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1200&auto=format&fit=crop"
+    )
   );
-  const sectionImage2 = getParam(
-    "section_image_2",
-    "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=800&q=80"
+  const sectionImage2 = getSafeImageUrl(
+    getParam(
+      "section_image_2",
+      "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=800&q=80"
+    )
+  );
+  const doctorImage = getSafeImageUrl(
+    getParam(
+      "doctor_image",
+      "/dr-ahmed-saed.jpg"
+    )
   );
 
   // Optional image extensions for full-page dynamism
-  const galleryImage1 = getParam("gallery_image_1", heroImage);
-  const galleryImage2 = getParam("gallery_image_2", sectionImage1);
-  const galleryImage3 = getParam("gallery_image_3", sectionImage2);
-  const galleryImage4 = getParam("gallery_image_4", heroImage);
+  const galleryImage1 = getSafeImageUrl(getParam("gallery_image_1", heroImage));
+  const galleryImage2 = getSafeImageUrl(
+    getParam(
+      "gallery_image_2",
+      "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=800&q=80"
+    )
+  );
+  const galleryImage3 = getSafeImageUrl(getParam("gallery_image_3", sectionImage2));
+  const galleryImage4 = getSafeImageUrl(getParam("gallery_image_4", heroImage));
 
   const heroBadge = getParam("hero_badge", "Modern Dentistry in {city}").replace(
     "{city}",
@@ -132,14 +163,14 @@ export default async function Home({
       icon: "auto_awesome",
       title: "Teeth Whitening",
       image:
-        "https://images.unsplash.com/photo-1598256989800-efbf1bc0af41?auto=format&fit=crop&w=800&q=80",
+        "/teeth-whitening.jpg",
       desc: "Professional bleaching systems that deliver noticeable results safely and effectively in just one visit.",
     },
     {
       icon: "orthopedics",
       title: "Braces & Aligners",
       image:
-        "https://images.unsplash.com/photo-1588776814546-daab30f310ce?auto=format&fit=crop&w=800&q=80",
+        "/braces.jpg",
       desc: "Modern orthodontic solutions including clear aligners and traditional braces for a perfectly aligned smile.",
     },
     {
@@ -160,7 +191,7 @@ export default async function Home({
       icon: "health_metrics",
       title: "Root Canal",
       image:
-        "https://images.unsplash.com/photo-1625134673337-519d8cdfe4dc?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&w=800&auto=format&fit=crop",
       desc: "Gentle, pain-free endodontic therapy to save natural teeth and eliminate infection at the root.",
     },
   ];
@@ -168,7 +199,7 @@ export default async function Home({
   const services = defaultServices.map((item, index) => ({
     icon: getParam(`service_${index + 1}_icon`, item.icon),
     title: getParam(`service_${index + 1}_title`, item.title),
-    image: getParam(`service_${index + 1}_image`, item.image),
+    image: getSafeImageUrl(getParam(`service_${index + 1}_image`, item.image)),
     desc: getParam(`service_${index + 1}_desc`, item.desc),
   }));
 
@@ -246,17 +277,23 @@ export default async function Home({
 
   const testimonialsTitle = getParam("testimonials_title", "Voices of Reassurance");
   const testimonialAvatars = [
-    getParam(
-      "testimonial_1_avatar",
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80"
+    getSafeImageUrl(
+      getParam(
+        "testimonial_1_avatar",
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80"
+      )
     ),
-    getParam(
-      "testimonial_2_avatar",
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+    getSafeImageUrl(
+      getParam(
+        "testimonial_2_avatar",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+      )
     ),
-    getParam(
-      "testimonial_3_avatar",
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80"
+    getSafeImageUrl(
+      getParam(
+        "testimonial_3_avatar",
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80"
+      )
     ),
   ];
   const testimonials = [
@@ -565,7 +602,7 @@ export default async function Home({
                 <img
                   alt={doctorImageAlt}
                   className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 border-[3px] border-[#4DB8E8]"
-                  src={sectionImage2}
+                  src={doctorImage}
                 />
               </div>
               <div className="absolute -bottom-10 -right-10 hidden lg:block bg-[#4DB8E8] text-white p-10 rounded-[20px] shadow-xl">

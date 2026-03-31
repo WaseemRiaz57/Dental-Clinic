@@ -176,6 +176,20 @@ function ServicesContent() {
   const client = searchParams.get("client") || "Modern Clinic";
   const category = searchParams.get("category") || "Healthcare";
 
+  const getSafeImageUrl = (url: string) => {
+    if (!url || url.startsWith("/") || url.startsWith("data:") || url.startsWith("blob:")) {
+      return url;
+    }
+
+    try {
+      const parsed = new URL(url);
+      const sourcePath = `${parsed.host}${parsed.pathname}${parsed.search}`;
+      return `https://images.weserv.nl/?url=${encodeURIComponent(sourcePath)}&output=webp&q=82`;
+    } catch {
+      return url;
+    }
+  };
+
   const imageByService: Record<string, string> = {
     Orthodontics:
       "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=900&h=650&fit=crop",
@@ -259,7 +273,7 @@ function ServicesContent() {
             <article key={service.title} className="stitch-card p-5 reveal-up reveal-delay-1">
               <div className="relative mb-5 overflow-hidden rounded-[12px] aspect-[16/10]">
                 <Image
-                  src={imageByService[service.title]}
+                  src={getSafeImageUrl(imageByService[service.title])}
                   alt={`${service.title} treatment`}
                   fill
                   className="object-cover"

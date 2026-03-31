@@ -5,7 +5,28 @@ import { useSearchParams } from "next/navigation";
 export default function Navbar() {
   const searchParams = useSearchParams();
   const clinicName = searchParams.get("client") || "Premium Dental Care";
-  const logoUrl = searchParams.get("logo_url");
+  const rawLogoUrl = searchParams.get("logo_url");
+
+  const logoUrl = (() => {
+    if (!rawLogoUrl) {
+      return null;
+    }
+    if (
+      rawLogoUrl.startsWith("/") ||
+      rawLogoUrl.startsWith("data:") ||
+      rawLogoUrl.startsWith("blob:")
+    ) {
+      return rawLogoUrl;
+    }
+
+    try {
+      const parsed = new URL(rawLogoUrl);
+      const sourcePath = `${parsed.host}${parsed.pathname}${parsed.search}`;
+      return `https://images.weserv.nl/?url=${encodeURIComponent(sourcePath)}&output=webp&q=82`;
+    } catch {
+      return rawLogoUrl;
+    }
+  })();
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-[#4DB8E8]/20 shadow-sm transition-all duration-300">
