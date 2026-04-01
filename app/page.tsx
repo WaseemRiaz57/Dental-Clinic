@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import AnimatedStat from "./components/AnimatedStat";
+import AnimatedStat from "../components/AnimatedStat";
 import AppointmentForm from "./components/AppointmentForm";
 
 /* ═══════════════════════════════════════════════════════════
