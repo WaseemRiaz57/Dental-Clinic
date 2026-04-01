@@ -6,13 +6,16 @@ import { useSearchParams } from "next/navigation";
 function BookingContent() {
   const searchParams = useSearchParams();
   const client = searchParams.get("client") || "Modern Clinic";
-  const rawPhone = searchParams.get("phone") || "03289662000";
-  let cleanPhone = rawPhone.replace(/\D/g, "");
+  const phone = searchParams.get("phone") || "03289662000";
+  
+  // Smart Phone Sanitization for WhatsApp
+  let cleanPhone = phone.replace(/\D/g, "");
   if (cleanPhone.startsWith("0")) {
     cleanPhone = `92${cleanPhone.substring(1)}`;
   } else if (!cleanPhone.startsWith("92")) {
     cleanPhone = `92${cleanPhone}`;
   }
+  
   const category = searchParams.get("category") || "Healthcare";
 
   const [form, setForm] = useState({
@@ -63,8 +66,7 @@ function BookingContent() {
     ],
   };
 
-  const options =
-    serviceOptions[category.toLowerCase()] || serviceOptions.healthcare;
+  const options = serviceOptions[category.toLowerCase()] || serviceOptions.healthcare;
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -122,7 +124,7 @@ Please confirm my booking. Thank you!`;
             <div className="space-y-4 text-sm text-white/80">
               <div className="flex items-start gap-3">
                 <span className="material-symbols-outlined text-[#4DB8E8]">call</span>
-                {phone || "Phone number available via query parameter"}
+                {phone}
               </div>
               <div className="flex items-start gap-3">
                 <span className="material-symbols-outlined text-[#4DB8E8]">schedule</span>
