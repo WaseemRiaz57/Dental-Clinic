@@ -5,10 +5,11 @@ import { useSearchParams } from "next/navigation";
 export default function WhatsAppButton() {
   const searchParams = useSearchParams();
   const phone = searchParams.get("phone") || "";
+  const whatsappNumber = (phone || "923289662000").replace(/\D/g, "") || "923289662000";
 
   return (
     <a
-      href={`https://wa.me/${phone}`}
+      href={`https://wa.me/${whatsappNumber}`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"

@@ -7,6 +7,7 @@ function BookingContent() {
   const searchParams = useSearchParams();
   const client = searchParams.get("client") || "Modern Clinic";
   const phone = searchParams.get("phone") || "";
+  const whatsappNumber = (phone || "923289662000").replace(/\D/g, "") || "923289662000";
   const category = searchParams.get("category") || "Healthcare";
 
   const [form, setForm] = useState({
@@ -84,7 +85,7 @@ function BookingContent() {
 Please confirm my booking. Thank you!`;
 
     const encoded = encodeURIComponent(message);
-    window.open(`https://wa.me/${phone}?text=${encoded}`, "_blank");
+    window.open(`https://wa.me/${whatsappNumber}?text=${encoded}`, "_blank");
   };
 
   return (
@@ -224,7 +225,7 @@ Please confirm my booking. Thank you!`;
             </button>
 
             <a
-              href={`https://wa.me/${phone}`}
+              href={`https://wa.me/${whatsappNumber}`}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full bg-[#25D366] hover:opacity-90 text-white font-bold py-4 px-6 rounded-[10px] transition-all inline-flex justify-center"

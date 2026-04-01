@@ -434,7 +434,8 @@ export default async function Home({
 
   // Dynamic Links
   const whatsappMessage = `Hello ${clinicName}, I would like to book an appointment.`;
-  const whatsappLink = `https://wa.me/${phone.replace(/[^a-zA-Z0-9]/g, "")}?text=${encodeURIComponent(whatsappMessage)}`;
+  const whatsappNumber = (phone || "923289662000").replace(/\D/g, "") || "923289662000";
+  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
   const lat = getParam("lat", "");
   const long = getParam("long", "");
   const hasCoordinates =
