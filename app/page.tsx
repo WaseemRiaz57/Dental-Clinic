@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import AnimatedStat from "../components/AnimatedStat";
-import AppointmentForm from "../components/AppointmentForm";
+import AnimatedStat from "./components/AnimatedStat";
+import AppointmentForm from "./components/AppointmentForm";
 
 /* ═══════════════════════════════════════════════════════════
    PIXEL-PERFECT STITCH REPLICA — 100% DYNAMIC
