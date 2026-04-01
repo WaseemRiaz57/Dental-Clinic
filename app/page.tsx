@@ -434,8 +434,13 @@ export default async function Home({
 
   // Dynamic Links
   const whatsappMessage = `Hello ${clinicName}, I would like to book an appointment.`;
-  const whatsappNumber = (phone || "923289662000").replace(/\D/g, "") || "923289662000";
-  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+  let cleanPhone = phone.replace(/\D/g, "");
+  if (cleanPhone.startsWith("0")) {
+    cleanPhone = `92${cleanPhone.substring(1)}`;
+  } else if (!cleanPhone.startsWith("92")) {
+    cleanPhone = `92${cleanPhone}`;
+  }
+  const whatsappLink = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(whatsappMessage)}`;
   const lat = getParam("lat", "");
   const long = getParam("long", "");
   const hasCoordinates =

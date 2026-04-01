@@ -27,7 +27,13 @@ function ContactContent() {
   const searchParams = useSearchParams();
   const client = searchParams.get("client") || "Modern Clinic";
   const phone = searchParams.get("phone") || "";
-  const whatsappNumber = (phone || "923289662000").replace(/\D/g, "") || "923289662000";
+  const rawPhone = phone || "03289662000";
+  let cleanPhone = rawPhone.replace(/\D/g, "");
+  if (cleanPhone.startsWith("0")) {
+    cleanPhone = `92${cleanPhone.substring(1)}`;
+  } else if (!cleanPhone.startsWith("92")) {
+    cleanPhone = `92${cleanPhone}`;
+  }
   const address =
     searchParams.get("address") || "123 Business Plaza, Suite 400, City Center";
   const lat = searchParams.get("lat") || "";
@@ -84,7 +90,7 @@ function ContactContent() {
               </a>
 
               <a
-                href={`https://wa.me/${whatsappNumber}`}
+                href={`https://wa.me/${cleanPhone}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-start gap-3 hover:opacity-85 transition-opacity"

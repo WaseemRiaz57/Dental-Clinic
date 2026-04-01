@@ -4,12 +4,17 @@ import { useSearchParams } from "next/navigation";
 
 export default function WhatsAppButton() {
   const searchParams = useSearchParams();
-  const phone = searchParams.get("phone") || "";
-  const whatsappNumber = (phone || "923289662000").replace(/\D/g, "") || "923289662000";
+  const rawPhone = searchParams.get("phone") || "03289662000";
+  let cleanPhone = rawPhone.replace(/\D/g, "");
+  if (cleanPhone.startsWith("0")) {
+    cleanPhone = `92${cleanPhone.substring(1)}`;
+  } else if (!cleanPhone.startsWith("92")) {
+    cleanPhone = `92${cleanPhone}`;
+  }
 
   return (
     <a
-      href={`https://wa.me/${whatsappNumber}`}
+      href={`https://wa.me/${cleanPhone}`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"
