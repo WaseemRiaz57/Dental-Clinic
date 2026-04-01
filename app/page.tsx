@@ -81,7 +81,7 @@ export default async function Home({
   const sectionImage1 = getSafeImageUrl(
     getParam(
       "section_image_1",
-      "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1200&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1588776814546-daab30f310ce?q=80&w=1000&auto=format&fit=crop"
     )
   );
   const sectionImage2 = getSafeImageUrl(
@@ -98,7 +98,12 @@ export default async function Home({
   );
 
   // Optional image extensions for full-page dynamism
-  const galleryImage1 = getSafeImageUrl(getParam("gallery_image_1", heroImage));
+  const galleryImage1 = getSafeImageUrl(
+    getParam(
+      "gallery_image_1",
+      "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1000&auto=format&fit=crop"
+    )
+  );
   const galleryImage2 = getSafeImageUrl(
     getParam(
       "gallery_image_2",
@@ -578,6 +583,7 @@ export default async function Home({
               <img
                 alt={teamImageAlt}
                 className="w-full h-[400px] object-cover opacity-80 group-hover:opacity-100 transition-all"
+                loading="lazy"
                 src={sectionImage1}
               />
               <div className="absolute inset-0 bg-[#002452]/20 flex items-center justify-center">
@@ -660,7 +666,7 @@ export default async function Home({
             {/* Large featured image */}
             <div className="col-span-2 row-span-2 relative group overflow-hidden rounded-[16px]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img alt={galleryImageAlt1} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src={galleryImage1} />
+              <img alt={galleryImageAlt1} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" src={galleryImage1} />
               <div className="absolute inset-0 bg-[#002452]/40 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
                 <span className="text-white stitch-display !text-white text-2xl italic">{galleryLabel1}</span>
               </div>
