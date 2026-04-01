@@ -344,7 +344,7 @@ export default async function Home({
   const locationTag = getParam("location_tag", "Premium Medical Wing");
 
   const formNameLabel = getParam("form_name_label", "Full Name");
-  const formNamePlaceholder = getParam("form_name_placeholder", "John Doe");
+  const formNamePlaceholder = getParam("form_name_placeholder", "Enter your full name");
   const formPhoneLabel = getParam("form_phone_label", "Phone Number");
   const formPhonePlaceholder = getParam("form_phone_placeholder", "+92 3XX XXXXXXX");
   const formServiceLabel = getParam("form_service_label", "Desired Service");
