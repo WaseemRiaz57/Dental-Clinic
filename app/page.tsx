@@ -81,7 +81,7 @@ export default async function Home({
   const sectionImage1 = getSafeImageUrl(
     getParam(
       "section_image_1",
-      "https://images.unsplash.com/photo-1588776814546-daab30f310ce?q=80&w=1000&auto=format&fit=crop"
+      "/team.jpg"
     )
   );
   const sectionImage2 = getSafeImageUrl(
@@ -101,7 +101,7 @@ export default async function Home({
   const galleryImage1 = getSafeImageUrl(
     getParam(
       "gallery_image_1",
-      "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1000&auto=format&fit=crop"
+      "/lounge.jpg"
     )
   );
   const galleryImage2 = getSafeImageUrl(
@@ -461,244 +461,223 @@ export default async function Home({
   const featuredReview = testimonials[featuredIdx];
   const otherReviews = testimonials.map((t, i) => ({ ...t, i })).filter((t) => t.i !== featuredIdx);
   const liveSocials = socialLinks.filter((s) => s.href && s.href !== "#");
+  const tints = ["t-mon", "t-tue", "t-wed", "t-thu", "t-fri", "t-sat"];
+  const reviewTints = ["t-wed", "t-fri", "t-sat"];
 
   return (
     <>
-      {/* ═══════════ HERO ═══════════ */}
-      <section className="relative overflow-hidden pt-28 pb-20 md:pt-36 md:pb-28" id="home">
-        <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 md:px-8 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            <p className="hero-fade mb-7 flex items-center gap-3 text-[0.95rem] font-medium text-ink-soft" style={{ animationDelay: "0.05s" }}>
-              <span aria-hidden className="h-2 w-2 rounded-full bg-gold" />
-              {heroBadge}
-            </p>
-
-            <h1 className="mb-8 font-display text-[clamp(2.6rem,6.2vw,5.4rem)] font-semibold leading-[1.02] text-teal-deep">
+      {/* ═══════════ HERO · Stage: the clinic's care label on a plastic slab ═══════════ */}
+      <section className="relative overflow-clip pb-16 pt-28 md:pb-20 md:pt-32" id="home" data-hero>
+        <div className="light-panes" aria-hidden="true"><i /><i /><i /><i /></div>
+        <div className="container relative grid items-center gap-14 lg:grid-cols-12">
+          <div className="min-w-0 lg:col-span-6">
+            <h1 className="mb-7 text-display-s">
               {heroWords.map((w, i) => (
-                <span key={i} className="mr-[0.22em] inline-block overflow-hidden pb-[0.08em] align-bottom">
-                  <span className="hero-rise" style={{ animationDelay: `${0.1 + i * 0.07}s` }}>
-                    {w}
-                  </span>
+                <span key={i} className="mr-[0.2em] inline-block overflow-hidden pb-[0.08em] align-bottom">
+                  <span className="hero-rise" style={{ animationDelay: `${0.1 + i * 0.07}s` }}>{w}</span>
                 </span>
               ))}
             </h1>
-
-            <p className="hero-fade mb-10 max-w-[34rem] text-lg leading-relaxed text-ink-soft" style={{ animationDelay: "0.7s" }}>
-              {heroDescription} <span className="font-semibold text-ink">{clinicName}</span>.
+            <p className="lead hero-fade mb-9" style={{ animationDelay: "0.7s" }}>
+              {heroDescription} {clinicName}.
             </p>
-
-            <div className="hero-fade mb-14 flex flex-wrap items-center gap-4" style={{ animationDelay: "0.85s" }}>
-              <a href={ctaPrimaryHref} className="btn btn-primary">
-                {ctaPrimaryText}
-                <span className="arrow material-symbols-outlined !text-xl" aria-hidden>arrow_forward</span>
-              </a>
-              <a href={ctaSecondaryHref} className="btn btn-ghost">
-                {ctaSecondaryText}
-              </a>
+            <div className="hero-fade flex flex-wrap gap-4" style={{ animationDelay: "0.85s" }}>
+              <a href={ctaPrimaryHref} className="btn btn--primary">{ctaPrimaryText}</a>
+              <a href={ctaSecondaryHref} className="btn">{ctaSecondaryText}</a>
             </div>
-
-            <dl className="hero-fade grid max-w-xl grid-cols-3" style={{ animationDelay: "1s" }}>
-              {trustStats.map((item, i) => (
-                <div key={item.label} className={`pr-3 sm:pr-8 ${i > 0 ? "border-l border-line pl-4 sm:pl-8" : ""}`}>
-                  <dt className="sr-only">{item.label}</dt>
-                  <dd className="font-display text-2xl font-semibold text-teal-deep sm:text-3xl">{item.value}</dd>
-                  <dd className="text-sm text-ink-soft">{item.label}</dd>
-                </div>
-              ))}
-            </dl>
           </div>
 
-          <div className="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
-            <div className="hero-arch aspect-[4/5] w-full bg-mist shadow-[var(--shadow-lift)]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img alt={`${clinicName} — modern dental clinic`} className="h-full w-full object-cover" src={heroImage} fetchPriority="high" />
+          <div className="hero-fade relative min-w-0 lg:col-span-6" style={{ animationDelay: "0.5s", perspective: "1200px" }}>
+            <div data-slab className="plastic t-thu p-3 will-change-transform md:p-4" style={{ transformStyle: "preserve-3d" }}>
+              <div data-slot="hero" data-alt={`${clinicName} — modern dental clinic`} className="aspect-[5/4] rounded-input">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img alt={`${clinicName} — modern dental clinic`} src={heroImage} fetchPriority="high" />
+              </div>
             </div>
-            <div className="hero-fade absolute -left-2 bottom-8 flex items-center gap-3 rounded-2xl bg-enamel px-5 py-4 shadow-[var(--shadow-lift)] md:-left-8" style={{ animationDelay: "1.2s" }}>
-              <span className="material-symbols-outlined text-gold" style={{ fontVariationSettings: "'FILL' 1" }} aria-hidden>star</span>
-              <div>
-                <div className="font-display text-xl font-semibold leading-none text-teal-deep">{ratingValue}</div>
-                <div className="mt-1 text-sm text-ink-soft">{ratingLabel}</div>
+            <div data-label className="label-card absolute bottom-4 left-4 w-[min(20rem,78%)]">
+              <div className="p-4">
+                <p className="mono mb-1 text-sm text-muted">{heroBadge}</p>
+                <p className="font-display text-xl font-bold leading-tight">{clinicName}</p>
+                <p className="mono mt-3 text-sm">{hoursTitle}</p>
+                <p className="mono text-sm text-muted">{hoursSubtitle}</p>
+              </div>
+              <div className="label-stub flex items-center justify-between gap-3 p-4">
+                <ul className="mono space-y-0.5 text-sm text-ink-2">
+                  {trustStats.map((t) => (<li key={t.label}>{t.value} {t.label}</li>))}
+                </ul>
+                <div data-stamp className="stamp shrink-0">
+                  <span className="text-lg">{ratingValue}</span>
+                  <span className="text-xs">{ratingLabel}</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ═══════════ SERVICES ═══════════ */}
-      <section className="bg-enamel py-24 md:py-32" id="services">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 md:px-8 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-4">
-            <div className="lg:sticky lg:top-28">
-              <h2 className="mb-5 font-display text-4xl font-semibold leading-[1.08] text-teal-deep md:text-5xl">{servicesTitle}</h2>
-              <p className="mb-8 max-w-sm text-ink-soft">{servicesSubtitle}</p>
-              <a href="#appointment" className="btn btn-primary">
-                {ctaPrimaryText}
-                <span className="arrow material-symbols-outlined !text-xl" aria-hidden>arrow_forward</span>
-              </a>
-            </div>
+      {/* ═══════════ SERVICES · the lidded tray ═══════════ */}
+      <section className="py-[var(--section-gap)]" id="services">
+        <div className="container">
+          <div className="mb-16 grid gap-6 md:grid-cols-12 md:items-end">
+            <h2 className="md:col-span-7">{servicesTitle}</h2>
+            <p className="lead text-ink-2 md:col-span-5 md:justify-self-end">{servicesSubtitle}</p>
           </div>
 
-          <ul className="border-b border-line lg:col-span-8">
-            {services.map((svc) => (
-              <li key={svc.title} className="border-t border-line">
-                <a href="#appointment" className="group flex items-center gap-5 px-1 py-6 transition-colors hover:bg-porcelain md:gap-8 md:px-4">
-                  <span className="arch block h-24 w-[4.5rem] shrink-0 bg-mist md:h-28 md:w-20">
+          <ul className="tray grid gap-5 p-4 sm:grid-cols-2 md:gap-6 md:p-6 lg:grid-cols-3">
+            {services.map((svc, idx) => (
+              <li key={svc.title} className={`cell relative ${tints[idx % tints.length]}`}>
+                <a href="#appointment" className="plastic group flex h-full flex-col gap-4 p-4 no-underline transition-transform duration-300 ease-[var(--ease-out)] hover:-translate-y-1">
+                  <div data-slot={`svc-${idx}`} className="aspect-[16/10] rounded-input">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={svc.image} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" />
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="mb-1.5 flex items-center gap-2 font-display text-xl font-semibold text-teal-deep md:text-2xl">
-                      <span className="material-symbols-outlined text-teal !text-[1.35rem]" aria-hidden>{svc.icon}</span>
-                      {svc.title}
-                    </span>
-                    <span className="block max-w-xl text-[0.97rem] leading-relaxed text-ink-soft">{svc.desc}</span>
-                  </span>
-                  <span className="hidden shrink-0 items-center gap-2 text-sm font-semibold text-teal sm:flex">
-                    {serviceExploreText}
-                    <span className="material-symbols-outlined !text-xl transition-transform duration-300 group-hover:translate-x-1.5" aria-hidden>arrow_forward</span>
-                  </span>
+                    <img src={svc.image} alt={`${svc.title} service`} loading="lazy" />
+                  </div>
+                  <div className="flex flex-1 flex-col px-1 pb-1">
+                    <span className="material-symbols-outlined mb-2 text-ink-2" aria-hidden>{svc.icon}</span>
+                    <h3 className="mb-2">{svc.title}</h3>
+                    <p className="mb-5 text-ink-2">{svc.desc}</p>
+                    <span className="link-line mt-auto self-start font-medium">{serviceExploreText}</span>
+                  </div>
                 </a>
+                <div className="lid" data-lid aria-hidden="true" />
               </li>
             ))}
           </ul>
         </div>
       </section>
 
-      {/* ═══════════ NUMBERS + PHILOSOPHY ═══════════ */}
-      <section className="bg-teal-deep py-24 text-white md:py-28">
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <div className="mb-20 grid grid-cols-2 gap-y-10 md:grid-cols-4">
+      {/* ═══════════ STATEMENT · the ink band ═══════════ */}
+      <section className="on-ink bg-ink py-[var(--section-gap-s)] text-paper">
+        <div className="container">
+          <dl className="mb-20 grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4">
             {whyStats.map((stat, i) => (
-              <div key={stat.label} className={`px-0 md:px-8 ${i > 0 ? "md:border-l md:border-white/15" : "md:pl-0"} ${i % 2 === 1 ? "pl-6 border-l border-white/15 md:pl-8" : ""}`}>
+              <div key={stat.label} className={`min-w-0 ${i > 0 ? "md:border-l md:border-ink-2 md:pl-8" : ""} ${i % 2 === 1 ? "border-l border-ink-2 pl-6" : ""}`}>
                 <AnimatedStat value={stat.value} label={stat.label} />
               </div>
             ))}
-          </div>
+          </dl>
 
           <div className="grid items-center gap-14 lg:grid-cols-12">
-            <div className="lg:col-span-6">
-              <h2 className="mb-6 font-display text-4xl font-semibold leading-[1.08] md:text-5xl">{philosophyTitle}</h2>
-              <p className="mb-10 max-w-xl text-lg leading-relaxed text-white/75">{philosophyBody}</p>
-              <ul className="space-y-4">
+            <div className="min-w-0 lg:col-span-7">
+              <h2 className="mb-6 !max-w-[22ch] text-paper" data-words>{philosophyTitle}</h2>
+              <p className="lead mb-10 text-accent-soft" data-words>{philosophyBody}</p>
+              <ul className="flex flex-wrap gap-3">
                 {philosophyBullets.map((item) => (
-                  <li key={item} className="flex items-start gap-4 text-white/90">
-                    <span className="material-symbols-outlined mt-0.5 !text-xl text-gold" aria-hidden>check</span>
+                  <li key={item} data-rise className="flex items-center gap-2 rounded-pill bg-accent-soft py-2 pl-3 pr-4 text-ink">
+                    <span className="material-symbols-outlined !text-xl text-accent-deep" aria-hidden>check</span>
                     {item}
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="lg:col-span-5 lg:col-start-8">
-              <div className="arch mx-auto aspect-[4/5] max-w-sm bg-teal lg:max-w-none">
+            <div className="min-w-0 lg:col-span-5">
+              <div data-open data-slot="team" data-alt={teamImageAlt} className="aspect-[4/5] rounded-card">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img alt={teamImageAlt} className="h-full w-full object-cover" loading="lazy" src={sectionImage1} />
+                <img data-drift alt={teamImageAlt} loading="lazy" src={sectionImage1} />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ═══════════ DOCTOR ═══════════ */}
-      <section className="py-24 md:py-32" id="about">
-        <div className="mx-auto grid max-w-7xl items-center gap-16 px-5 md:px-8 lg:grid-cols-12">
-          <div className="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
-            <div className="arch aspect-[4/5] bg-mist shadow-[var(--shadow-soft)]">
+      {/* ═══════════ DOCTOR · two labels beside a portrait ═══════════ */}
+      <section className="py-[var(--section-gap)]" id="about">
+        <div className="container grid items-center gap-16 lg:grid-cols-12">
+          <div className="relative min-w-0 lg:col-span-5">
+            <div data-open data-slot="doctor" data-alt={doctorImageAlt} className="aspect-[4/5] rounded-card shadow-card">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img alt={doctorImageAlt} className="h-full w-full object-cover" loading="lazy" src={doctorImage} />
+              <img data-drift alt={doctorImageAlt} loading="lazy" src={doctorImage} />
             </div>
-            <div className="absolute -bottom-5 right-2 grid h-32 w-32 place-content-center rounded-full bg-gold text-center text-teal-deep shadow-[var(--shadow-lift)] md:-right-6">
-              <div className="font-display text-3xl font-semibold leading-none">{doctorYearsValue}</div>
-              <div className="mt-1 px-3 text-xs font-medium leading-tight">{doctorYearsLabel}</div>
+            <div data-stamp className="stamp absolute -bottom-5 right-4 z-[2] bg-paper shadow-lift md:-right-6">
+              <span className="text-xl">{doctorYearsValue}</span>
+              <span className="text-xs">{doctorYearsLabel}</span>
             </div>
           </div>
 
-          <div className="lg:col-span-6 lg:col-start-7">
-            <p className="mb-3 text-[0.95rem] font-medium text-teal">{doctorSectionTitle}</p>
-            <h2 className="mb-2 font-display text-4xl font-semibold leading-[1.08] text-teal-deep md:text-5xl">{doctorName}</h2>
-            <p className="mb-8 text-lg text-ink-soft">{doctorCredentials}</p>
-            <p className="mb-10 max-w-xl leading-[1.75] text-ink-soft">{doctorBio}</p>
-            <ul className="border-b border-line">
+          <div className="min-w-0 lg:col-span-7 lg:pl-8">
+            <h2 className="mb-3">{doctorName}</h2>
+            <p className="lead mb-8 text-ink-2">{doctorSectionTitle}, {doctorCredentials}</p>
+            <p className="mb-10 text-ink-2">{doctorBio}</p>
+            <div className="grid gap-5 sm:grid-cols-2">
               {[
-                { icon: "school", title: doctorQual1Title, body: doctorQual1Body },
-                { icon: "verified", title: doctorQual2Title, body: doctorQual2Body },
+                { icon: "school", title: doctorQual1Title, body: doctorQual1Body, tint: "t-wed" },
+                { icon: "verified", title: doctorQual2Title, body: doctorQual2Body, tint: "t-fri" },
               ].map((q) => (
-                <li key={q.title} className="flex gap-4 border-t border-line py-5">
-                  <span className="material-symbols-outlined mt-0.5 text-teal" aria-hidden>{q.icon}</span>
-                  <div>
-                    <h3 className="font-display text-lg font-semibold text-teal-deep">{q.title}</h3>
-                    <p className="text-[0.95rem] text-ink-soft">{q.body}</p>
+                <div key={q.title} data-rise className={`plastic ${q.tint} p-3`}>
+                  <div className="label-card p-4">
+                    <span className="material-symbols-outlined mb-3 text-accent" aria-hidden>{q.icon}</span>
+                    <h3 className="mb-1">{q.title}</h3>
+                    <p className="label-stub mono mt-3 pt-3 text-sm text-muted">{q.body}</p>
                   </div>
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ═══════════ GALLERY ═══════════ */}
-      <section className="bg-enamel py-24 md:py-32">
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <div className="mb-12 max-w-2xl">
-            <h2 className="mb-4 font-display text-4xl font-semibold leading-[1.08] text-teal-deep md:text-5xl">{galleryTitle}</h2>
-            <p className="text-ink-soft">{gallerySubtitle}</p>
-          </div>
-          <div className="grid auto-rows-[clamp(8.5rem,24vw,15rem)] grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
+      {/* ═══════════ GALLERY · pinned, travels sideways ═══════════ */}
+      <section className="hscroll bg-paper-2 py-[var(--section-gap-s)] md:py-0" data-hscroll>
+        <div className="container mb-10 md:mb-12">
+          <h2 className="mb-3">{galleryTitle}</h2>
+          <p className="lead text-ink-2">{gallerySubtitle}</p>
+        </div>
+        <div className="container md:!max-w-none md:!p-0">
+          <div className="htrack" data-htrack>
             {[
-              { src: galleryImage1, alt: galleryImageAlt1, label: galleryLabel1, cls: "col-span-2 row-span-2" },
-              { src: galleryImage2, alt: galleryImageAlt2, label: galleryLabel2, cls: "col-span-2" },
-              { src: galleryImage3, alt: galleryImageAlt3, label: galleryImageAlt3, cls: "" },
-              { src: galleryImage4, alt: galleryImageAlt4, label: galleryImageAlt4, cls: "" },
+              { src: galleryImage1, alt: galleryImageAlt1, label: galleryLabel1, tint: "t-thu", ratio: "aspect-[4/3]" },
+              { src: galleryImage2, alt: galleryImageAlt2, label: galleryLabel2, tint: "t-fri", ratio: "aspect-[4/3]" },
+              { src: galleryImage3, alt: galleryImageAlt3, label: galleryImageAlt3, tint: "t-wed", ratio: "aspect-[4/3]" },
+              { src: galleryImage4, alt: galleryImageAlt4, label: galleryImageAlt4, tint: "t-sat", ratio: "aspect-[4/3]" },
             ].map((g, i) => (
-              <figure key={i} className={`group relative overflow-hidden rounded-3xl bg-mist ${g.cls}`}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img alt={g.alt} loading="lazy" src={g.src} className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
-                <figcaption className="absolute bottom-3 left-3 rounded-full bg-enamel/95 px-4 py-1.5 text-sm font-medium text-teal-deep backdrop-blur">
-                  {g.label}
-                </figcaption>
+              <figure key={i} className={`hitem plastic ${g.tint} m-0 min-w-0 p-3`}>
+                <div data-slot={`gal-${i}`} data-alt={g.alt} className={`${g.ratio} rounded-input`}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img alt={g.alt} src={g.src} />
+                </div>
+                <figcaption className="px-1 pt-3 text-sm text-ink-2">{g.label}</figcaption>
               </figure>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ═══════════ REVIEWS ═══════════ */}
-      <section className="bg-mist py-24 md:py-32" id="reviews">
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
+      {/* ═══════════ REVIEWS · labels from patients ═══════════ */}
+      <section className="py-[var(--section-gap)]" id="reviews">
+        <div className="container">
           <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
-            <h2 className="max-w-xl font-display text-4xl font-semibold leading-[1.08] text-teal-deep md:text-5xl">{testimonialsTitle}</h2>
-            <p className="flex items-center gap-3 text-ink-soft">
-              <span className="material-symbols-outlined text-gold" style={{ fontVariationSettings: "'FILL' 1" }} aria-hidden>star</span>
-              <span><span className="font-display text-xl font-semibold text-teal-deep">{ratingValue}</span> {ratingLabel}</span>
-            </p>
+            <h2>{testimonialsTitle}</h2>
+            <p className="mono text-ink-2">{ratingValue} {ratingLabel}</p>
           </div>
-
           <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
-            <figure className="flex flex-col justify-between rounded-[2rem] bg-teal-deep p-8 text-white md:p-12 lg:col-span-7">
-              <blockquote className="mb-10 font-display text-2xl font-medium leading-snug md:text-[2rem]">
-                &ldquo;{featuredReview.quote}&rdquo;
-              </blockquote>
-              <figcaption className="flex items-center gap-4">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={testimonialAvatars[featuredIdx]} alt="" className="h-14 w-14 rounded-full object-cover ring-2 ring-gold" />
-                <div>
-                  <div className="font-semibold">{featuredReview.name}</div>
-                  <div className="text-sm text-teal-light">{featuredReview.role}</div>
-                </div>
-              </figcaption>
+            <figure data-rise className={`plastic ${reviewTints[featuredIdx % 3]} m-0 p-3 lg:col-span-7`}>
+              <div className="label-card flex h-full flex-col justify-between p-7 md:p-10">
+                <blockquote className="mb-10 m-0 font-display text-2xl font-bold leading-snug tracking-[var(--tracking-display)] md:text-3xl">
+                  &ldquo;{featuredReview.quote}&rdquo;
+                </blockquote>
+                <figcaption className="label-stub flex items-center gap-4 pt-5">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <span data-slot className="block h-14 w-14 shrink-0 rounded-pill"><img src={testimonialAvatars[featuredIdx]} alt="" /></span>
+                  <div>
+                    <div className="font-medium">{featuredReview.name}</div>
+                    <div className="mono text-sm text-muted">{featuredReview.role}</div>
+                  </div>
+                </figcaption>
+              </div>
             </figure>
-
             <div className="grid gap-6 lg:col-span-5">
               {otherReviews.map((item) => (
-                <figure key={item.name} className="rounded-[2rem] bg-enamel p-7 md:p-8">
-                  <blockquote className="mb-6 leading-relaxed text-ink">&ldquo;{item.quote}&rdquo;</blockquote>
-                  <figcaption className="flex items-center gap-3">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={testimonialAvatars[item.i]} alt="" className="h-11 w-11 rounded-full object-cover" />
-                    <div>
-                      <div className="font-semibold text-teal-deep">{item.name}</div>
-                      <div className="text-sm text-ink-soft">{item.role}</div>
-                    </div>
-                  </figcaption>
+                <figure key={item.name} data-rise className={`plastic ${reviewTints[item.i % 3]} m-0 p-3`}>
+                  <div className="label-card p-6">
+                    <blockquote className="m-0 mb-5">&ldquo;{item.quote}&rdquo;</blockquote>
+                    <figcaption className="label-stub flex items-center gap-3 pt-4">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <span data-slot className="block h-11 w-11 shrink-0 rounded-pill"><img src={testimonialAvatars[item.i]} alt="" /></span>
+                      <div>
+                        <div className="font-medium">{item.name}</div>
+                        <div className="mono text-sm text-muted">{item.role}</div>
+                      </div>
+                    </figcaption>
+                  </div>
                 </figure>
               ))}
             </div>
@@ -706,31 +685,20 @@ export default async function Home({
         </div>
       </section>
 
-      {/* ═══════════ APPOINTMENT ═══════════ */}
-      <section className="bg-teal-deep py-24 text-white md:py-32" id="appointment">
-        <div className="mx-auto grid max-w-7xl items-start gap-14 px-5 md:px-8 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <h2 className="mb-6 font-display text-4xl font-semibold leading-[1.08] md:text-5xl">{appointmentTitle}</h2>
-            <p className="mb-12 max-w-md text-lg leading-relaxed text-white/75">{appointmentSubtitle}</p>
-            <ul className="space-y-6">
-              <li className="flex gap-4">
-                <span className="material-symbols-outlined text-gold" aria-hidden>schedule</span>
-                <div>
-                  <p className="font-semibold">{hoursTitle}</p>
-                  <p className="text-sm text-white/65">{hoursSubtitle}</p>
-                </div>
-              </li>
-              <li className="flex gap-4">
-                <span className="material-symbols-outlined text-gold" aria-hidden>location_on</span>
-                <div>
-                  <p className="font-semibold">{address}</p>
-                  <p className="text-sm text-white/65">{locationTag}</p>
-                </div>
-              </li>
-            </ul>
+      {/* ═══════════ APPOINTMENT · the first step, in a sunken tray ═══════════ */}
+      <section className="bg-paper-3 py-[var(--section-gap)]" id="appointment">
+        <div className="container grid items-start gap-14 lg:grid-cols-12">
+          <div className="min-w-0 lg:col-span-5">
+            <h2 className="mb-6">{appointmentTitle}</h2>
+            <p className="lead mb-10 text-ink-2">{appointmentSubtitle}</p>
+            <div className="label-card p-5">
+              <p className="mono">{hoursTitle}</p>
+              <p className="mono text-sm text-muted">{hoursSubtitle}</p>
+              <p className="label-stub mt-4 pt-4">{address}</p>
+              <p className="mono text-sm text-muted">{locationTag}</p>
+            </div>
           </div>
-
-          <div className="rounded-[2rem] bg-enamel p-6 text-ink shadow-[var(--shadow-lift)] md:p-10 lg:col-span-7">
+          <div className="tray min-w-0 bg-paper p-6 md:p-10 lg:col-span-7" data-rise>
             <AppointmentForm
               clinicName={clinicName}
               targetPhone={cleanPhone}
@@ -752,23 +720,23 @@ export default async function Home({
       </section>
 
       {/* ═══════════ CONTACT ═══════════ */}
-      <section className="py-24 md:py-32" id="contact">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 md:px-8 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-5">
-            <h2 className="mb-4 font-display text-4xl font-semibold leading-[1.08] text-teal-deep md:text-5xl">{contactTitle}</h2>
-            <p className="mb-10 max-w-md text-ink-soft">{contactSubtitle.replace("{city}", cityFallback)}</p>
-            <ul className="border-b border-line">
+      <section className="py-[var(--section-gap)]" id="contact">
+        <div className="container grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="min-w-0 lg:col-span-5">
+            <h2 className="mb-4">{contactTitle}</h2>
+            <p className="lead mb-10 text-ink-2">{contactSubtitle.replace("{city}", cityFallback)}</p>
+            <ul className="m-0 list-none border-b border-rule p-0">
               {[
                 { icon: "location_on", label: contactAddressLabel, value: address, href: `https://maps.google.com/maps?q=${mapQuery}` },
-                { icon: "call", label: contactPhoneLabel, value: phone, href: `tel:+${cleanPhone}` },
-                { icon: "mail", label: contactEmailLabel, value: email, href: `mailto:${email}` },
+                { icon: "call", label: contactPhoneLabel, value: phone, href: `tel:+${cleanPhone}`, mono: true },
+                { icon: "mail", label: contactEmailLabel, value: email, href: `mailto:${email}`, mono: true },
               ].map((row) => (
-                <li key={row.label} className="border-t border-line">
-                  <a href={row.href} className="group flex gap-5 py-5">
-                    <span className="material-symbols-outlined mt-0.5 text-teal" aria-hidden>{row.icon}</span>
-                    <span>
-                      <span className="block text-sm text-ink-soft">{row.label}</span>
-                      <span className="link-draw font-medium text-teal-deep group-hover:bg-[length:100%_1.5px]">{row.value}</span>
+                <li key={row.label} data-rise className="border-t border-rule">
+                  <a href={row.href} className="flex gap-5 py-5 no-underline">
+                    <span className="material-symbols-outlined mt-0.5 text-accent" aria-hidden>{row.icon}</span>
+                    <span className="min-w-0">
+                      <span className="block text-sm text-muted">{row.label}</span>
+                      <span className={`link-line break-words font-medium ${row.mono ? "mono" : ""}`}>{row.value}</span>
                     </span>
                   </a>
                 </li>
@@ -777,24 +745,24 @@ export default async function Home({
             {liveSocials.length > 0 && (
               <div className="mt-8 flex gap-3">
                 {liveSocials.map((item) => (
-                  <a key={item.icon} aria-label={item.icon.replace(/_/g, " ")} className="grid h-11 w-11 place-items-center rounded-full bg-mist text-teal-deep transition-colors hover:bg-teal-deep hover:text-white" href={item.href}>
-                    <span className="material-symbols-outlined">{item.icon}</span>
+                  <a key={item.icon} aria-label={item.icon.replace(/_/g, " ")} className="btn btn--sm !px-3" href={item.href}>
+                    <span className="material-symbols-outlined" aria-hidden>{item.icon}</span>
                   </a>
                 ))}
               </div>
             )}
           </div>
-          <div className="h-[22rem] overflow-hidden rounded-[2rem] bg-mist shadow-[var(--shadow-soft)] md:h-[30rem] lg:col-span-7">
-            <iframe allowFullScreen height="100%" width="100%" src={mapUrl} style={{ border: 0 }} title={`${clinicName} location`} loading="lazy" />
+          <div className="plastic t-fri h-[22rem] min-w-0 p-3 md:h-[30rem] lg:col-span-7">
+            <iframe allowFullScreen height="100%" width="100%" src={mapUrl} style={{ border: 0, borderRadius: "10px" }} title={`${clinicName} location`} loading="lazy" />
           </div>
         </div>
       </section>
 
       {/* ═══════════ FOOTER ═══════════ */}
-      <footer className="bg-teal-deep pb-28 pt-16 text-white md:pb-10">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 md:grid-cols-12 md:px-8">
-          <div className="md:col-span-5">
-            <div className="mb-5 font-display text-2xl font-semibold">
+      <footer className="on-ink bg-ink pb-28 pt-16 text-paper md:pb-10">
+        <div className="container grid gap-12 lg:grid-cols-12">
+          <div className="min-w-0 lg:col-span-4">
+            <div className="mb-5 font-display text-2xl font-bold">
               {logoUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={logoUrl} alt={`${clinicName} logo`} className="h-10 w-auto object-contain" />
@@ -802,45 +770,41 @@ export default async function Home({
                 clinicName
               )}
             </div>
-            <p className="max-w-sm text-[0.95rem] leading-relaxed text-white/70">{footerTagline}</p>
+            <p className="max-w-sm text-accent-soft">{footerTagline}</p>
           </div>
-          <nav aria-label="Footer" className="grid grid-cols-2 gap-8 md:col-span-4">
+          <nav aria-label="Footer" className="grid grid-cols-2 gap-8 lg:col-span-4 lg:col-start-5">
             {[
               { heading: companyHeading, items: companyLinks },
               { heading: supportHeading, items: supportLinks },
             ].map((col) => (
               <div key={col.heading}>
-                <h3 className="mb-4 font-display text-base font-semibold text-gold">{col.heading}</h3>
-                <ul className="space-y-3 text-[0.95rem] text-white/75">
+                <h3 className="mb-4 text-md text-paper">{col.heading}</h3>
+                <ul className="m-0 list-none space-y-3 p-0 text-accent-soft">
                   {col.items.map((item) => (
-                    <li key={item.label}>
-                      <a className="link-draw hover:text-white" href={item.href}>{item.label}</a>
-                    </li>
+                    <li key={item.label}><a className="link-line whitespace-nowrap" href={item.href}>{item.label}</a></li>
                   ))}
                 </ul>
               </div>
             ))}
           </nav>
-          <div className="md:col-span-3">
-            <h3 className="mb-4 font-display text-base font-semibold text-gold">{contactHeading}</h3>
-            <ul className="space-y-3 text-[0.95rem] text-white/75">
+          <div className="min-w-0 lg:col-span-4">
+            <h3 className="mb-4 text-md text-paper">{contactHeading}</h3>
+            <ul className="m-0 list-none space-y-3 p-0 text-accent-soft">
               <li>{address}</li>
-              <li><a className="link-draw hover:text-white" href={`tel:+${cleanPhone}`}>{phone}</a></li>
-              <li><a className="link-draw hover:text-white" href={`mailto:${email}`}>{email}</a></li>
+              <li><a className="link-line mono" href={`tel:+${cleanPhone}`}>{phone}</a></li>
+              <li className="break-all"><a className="link-line mono" href={`mailto:${email}`}>{email}</a></li>
             </ul>
           </div>
         </div>
-        <div className="mx-auto mt-14 max-w-7xl border-t border-white/15 px-5 pt-6 text-sm text-white/55 md:px-8">
+        <div className="container mt-14 border-t border-ink-2 pt-6 text-sm text-accent-soft">
           © {new Date().getFullYear()} {clinicName}. {copyrightSuffix}
         </div>
       </footer>
 
       {/* Mobile quick actions */}
-      <div className="fixed inset-x-3 bottom-3 z-40 flex gap-2 rounded-full bg-enamel p-2 shadow-[var(--shadow-lift)] md:hidden">
-        <a href="#appointment" className="btn btn-primary flex-1 !min-h-11">Book a visit</a>
-        <a href={whatsappLink} target="_blank" rel="noopener noreferrer" aria-label={whatsappButtonText} className="btn flex-1 !min-h-11 bg-[#1faa59] text-white">
-          WhatsApp
-        </a>
+      <div className="fixed inset-x-3 bottom-3 z-[200] flex gap-2 rounded-card bg-paper p-2 shadow-lift md:hidden">
+        <a href="#appointment" className="btn btn--primary btn--sm flex-1">Book a visit</a>
+        <a href={whatsappLink} target="_blank" rel="noopener noreferrer" aria-label={whatsappButtonText} className="btn btn--sm flex-1">WhatsApp</a>
       </div>
     </>
   );

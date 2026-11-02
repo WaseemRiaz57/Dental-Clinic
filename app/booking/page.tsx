@@ -96,38 +96,37 @@ Please confirm my booking. Thank you!`;
   };
 
   return (
-    <section className="min-h-screen px-4 py-12 pb-28 mesh-accent">
+    <section className="min-h-dvh px-4 py-12 pb-28 mesh-accent">
       <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 items-stretch">
-        <aside className="bg-[#0b3b3c] text-white rounded-[24px] p-8 md:p-10 editorial-shadow relative overflow-hidden reveal-up reveal-delay-1">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(77,184,232,0.25),transparent_45%)]" />
+        <aside className="bg-ink text-white rounded-[24px] p-8 md:p-10 editorial-shadow relative overflow-hidden reveal-up reveal-delay-1">
           <div className="relative z-10">
-            <p className="text-xs uppercase tracking-[0.2em] text-white/70 mb-4">Appointment Desk</p>
+            <p className="text-xs  text-white/70 mb-4">Appointment Desk</p>
             <h1 className="stitch-title text-white text-4xl font-bold mb-5">Book Your Visit</h1>
             <p className="text-white/80 leading-relaxed mb-8">
               Confirm your preferred service and schedule. Your WhatsApp request will be sent instantly to {client}.
             </p>
             <div className="space-y-5 text-sm">
               <div className="flex items-start gap-3">
-                <span className="material-symbols-outlined text-[#c99a3b]">verified</span>
+                <span className="material-symbols-outlined text-accent-soft">verified</span>
                 Certified and experienced specialists
               </div>
               <div className="flex items-start gap-3">
-                <span className="material-symbols-outlined text-[#c99a3b]">schedule</span>
+                <span className="material-symbols-outlined text-accent-soft">schedule</span>
                 Flexible timings based on availability
               </div>
               <div className="flex items-start gap-3">
-                <span className="material-symbols-outlined text-[#c99a3b]">chat</span>
+                <span className="material-symbols-outlined text-accent-soft">chat</span>
                 Direct WhatsApp confirmation workflow
               </div>
             </div>
             <div className="stitch-divider my-8 bg-white/20" />
             <div className="space-y-4 text-sm text-white/80">
               <div className="flex items-start gap-3">
-                <span className="material-symbols-outlined text-[#c99a3b]">call</span>
+                <span className="material-symbols-outlined text-accent-soft">call</span>
                 {phone}
               </div>
               <div className="flex items-start gap-3">
-                <span className="material-symbols-outlined text-[#c99a3b]">schedule</span>
+                <span className="material-symbols-outlined text-accent-soft">schedule</span>
                 Mon - Sat: 9:00 AM - 6:00 PM
               </div>
             </div>
@@ -136,13 +135,13 @@ Please confirm my booking. Thank you!`;
 
         <div className="stitch-card p-6 md:p-10 reveal-up reveal-delay-2">
           <h2 className="stitch-title text-3xl font-bold mb-2">Schedule your appointment</h2>
-          <p className="text-[#46605f] mb-7">Fill in your details below.</p>
+          <p className="text-muted mb-7">Fill in your details below.</p>
 
           <form className="space-y-5" onSubmit={handleSubmit}>
             <label className="block">
-              <span className="block text-xs font-bold uppercase tracking-widest text-[#46605f] mb-2">Full Name</span>
+              <span className="block text-xs font-bold  text-muted mb-2">Full Name</span>
               <input
-                className="w-full rounded-[10px] border-0 bg-[#e4edeb] px-4 py-3 focus:ring-2 focus:ring-[#1b6b67]/30"
+                className="w-full rounded-[10px] border-0 bg-paper-3 px-4 py-3 focus:ring-2 focus:ring-accent/30"
                 placeholder="Jane Doe"
                 type="text"
                 name="name"
@@ -154,9 +153,9 @@ Please confirm my booking. Thank you!`;
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <label className="block">
-                <span className="block text-xs font-bold uppercase tracking-widest text-[#46605f] mb-2">Phone Number</span>
+                <span className="block text-xs font-bold  text-muted mb-2">Phone Number</span>
                 <input
-                  className="w-full rounded-[10px] border-0 bg-[#e4edeb] px-4 py-3 focus:ring-2 focus:ring-[#1b6b67]/30"
+                  className="w-full rounded-[10px] border-0 bg-paper-3 px-4 py-3 focus:ring-2 focus:ring-accent/30"
                   placeholder="+1 (555) 000-0000"
                   type="tel"
                   name="phone"
@@ -167,9 +166,9 @@ Please confirm my booking. Thank you!`;
               </label>
 
               <label className="block">
-                <span className="block text-xs font-bold uppercase tracking-widest text-[#46605f] mb-2">Email Address</span>
+                <span className="block text-xs font-bold  text-muted mb-2">Email Address</span>
                 <input
-                  className="w-full rounded-[10px] border-0 bg-[#e4edeb] px-4 py-3 focus:ring-2 focus:ring-[#1b6b67]/30"
+                  className="w-full rounded-[10px] border-0 bg-paper-3 px-4 py-3 focus:ring-2 focus:ring-accent/30"
                   placeholder="jane@example.com"
                   type="email"
                   name="email"
@@ -181,15 +180,15 @@ Please confirm my booking. Thank you!`;
             </div>
 
             <label className="block">
-              <span className="block text-xs font-bold uppercase tracking-widest text-[#46605f] mb-2">Desired Service</span>
+              <span className="block text-xs font-bold  text-muted mb-2">Desired Service</span>
               <select
-                className="w-full rounded-[10px] border-0 bg-[#e4edeb] px-4 py-3 focus:ring-2 focus:ring-[#1b6b67]/30"
+                className="w-full rounded-[10px] border-0 bg-paper-3 px-4 py-3 focus:ring-2 focus:ring-accent/30"
                 name="service"
                 value={form.service}
                 onChange={handleChange}
                 required
               >
-                <option value="">Choose a treatment...</option>
+                <option value="">Choose a treatment…</option>
                 {options.map((opt) => (
                   <option key={opt.value} value={opt.value}>
                     {opt.label}
@@ -200,9 +199,9 @@ Please confirm my booking. Thank you!`;
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <label className="block">
-                <span className="block text-xs font-bold uppercase tracking-widest text-[#46605f] mb-2">Date</span>
+                <span className="block text-xs font-bold  text-muted mb-2">Date</span>
                 <input
-                  className="w-full rounded-[10px] border-0 bg-[#e4edeb] px-4 py-3 focus:ring-2 focus:ring-[#1b6b67]/30"
+                  className="w-full rounded-[10px] border-0 bg-paper-3 px-4 py-3 focus:ring-2 focus:ring-accent/30"
                   type="date"
                   name="date"
                   value={form.date}
@@ -212,9 +211,9 @@ Please confirm my booking. Thank you!`;
               </label>
 
               <label className="block">
-                <span className="block text-xs font-bold uppercase tracking-widest text-[#46605f] mb-2">Preferred Time</span>
+                <span className="block text-xs font-bold  text-muted mb-2">Preferred Time</span>
                 <input
-                  className="w-full rounded-[10px] border-0 bg-[#e4edeb] px-4 py-3 focus:ring-2 focus:ring-[#1b6b67]/30"
+                  className="w-full rounded-[10px] border-0 bg-paper-3 px-4 py-3 focus:ring-2 focus:ring-accent/30"
                   type="time"
                   name="time"
                   value={form.time}
@@ -225,7 +224,7 @@ Please confirm my booking. Thank you!`;
             </div>
 
             <button
-              className="w-full bg-[#0b3b3c] hover:bg-[#0b3b3c] text-white font-bold py-4 px-6 rounded-[10px] transition-all"
+              className="w-full bg-ink hover:bg-ink text-white font-bold py-4 px-6 rounded-[10px] transition-colors"
               type="submit"
             >
               Confirm Booking via WhatsApp
@@ -235,7 +234,7 @@ Please confirm my booking. Thank you!`;
               href={`https://wa.me/${cleanPhone}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full bg-[#25D366] hover:opacity-90 text-white font-bold py-4 px-6 rounded-[10px] transition-all inline-flex justify-center"
+              className="w-full bg-whatsapp hover:opacity-90 text-white font-bold py-4 px-6 rounded-[10px] transition-colors inline-flex justify-center"
             >
               Chat on WhatsApp
             </a>
@@ -250,8 +249,8 @@ export default function BookingPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0b3b3c]" />
+        <div className="flex items-center justify-center min-h-dvh">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-ink" />
         </div>
       }
     >
