@@ -258,12 +258,12 @@ function ServicesContent() {
     servicesByCategory.healthcare;
 
   return (
-    <section className="min-h-screen pb-28 py-10 px-4 mesh-accent">
+    <section className="min-h-dvh pb-28 py-10 px-4 mesh-accent">
       <div className="max-w-7xl mx-auto">
         <header className="mb-12 text-center reveal-up">
-          <p className="text-xs uppercase tracking-[0.2em] text-[#1b6b67] mb-3">Elite Solutions</p>
+          <p className="text-xs  text-accent mb-3">Elite Solutions</p>
           <h1 className="stitch-title text-4xl md:text-5xl font-bold mb-4">Our Treatments</h1>
-          <p className="text-[#46605f] max-w-2xl mx-auto">
+          <p className="text-muted max-w-2xl mx-auto">
             Advanced {category.toLowerCase()} solutions tailored to your needs at {client}.
           </p>
         </header>
@@ -281,15 +281,15 @@ function ServicesContent() {
                 />
               </div>
               <div className="flex items-start gap-4 mb-3">
-                <div className="flex items-center justify-center size-11 rounded-full bg-[#e4edeb] text-[#0b3b3c] shrink-0">
+                <div className="flex items-center justify-center size-11 rounded-full bg-paper-3 text-ink shrink-0">
                   <span className="material-symbols-outlined">{service.icon}</span>
                 </div>
-                <h2 className="text-lg font-bold text-[#0b3b3c] pt-2">{service.title}</h2>
+                <h2 className="text-lg font-bold text-ink pt-2">{service.title}</h2>
               </div>
-              <p className="text-[#46605f] text-sm leading-relaxed mb-5">{service.desc}</p>
+              <p className="text-muted text-sm leading-relaxed mb-5">{service.desc}</p>
               <DynamicLink
                 href="/booking"
-                className="inline-flex items-center gap-2 text-[#1b6b67] font-bold text-xs uppercase tracking-widest"
+                className="inline-flex items-center gap-2 text-accent font-bold text-xs "
               >
                 Book now
                 <span className="material-symbols-outlined text-sm">arrow_forward</span>
@@ -306,8 +306,8 @@ export default function ServicesPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0b3b3c]" />
+        <div className="flex items-center justify-center min-h-dvh">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-ink" />
         </div>
       }
     >

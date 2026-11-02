@@ -48,20 +48,20 @@ function ContactContent() {
     : "";
 
   return (
-    <section className="min-h-screen pb-28 py-10 px-4 mesh-accent">
+    <section className="min-h-dvh pb-28 py-10 px-4 mesh-accent">
       <div className="max-w-7xl mx-auto">
         <DynamicLink
           href="/"
-          className="inline-flex items-center gap-2 text-sm text-[#1b6b67] hover:underline mb-6"
+          className="inline-flex items-center gap-2 text-sm text-accent hover:underline mb-6"
         >
           <span className="material-symbols-outlined text-lg">arrow_back</span>
           Back to Home
         </DynamicLink>
 
         <header className="mb-10">
-          <p className="text-xs uppercase tracking-[0.2em] text-[#1b6b67] mb-3">Contact & Access</p>
+          <p className="text-xs  text-accent mb-3">Contact & Access</p>
           <h1 className="stitch-title text-4xl md:text-5xl font-bold mb-3">Visit {client}</h1>
-          <p className="text-[#46605f] max-w-2xl">
+          <p className="text-muted max-w-2xl">
             We are here to support your {category.toLowerCase()} journey with personalized care.
           </p>
         </header>
@@ -70,22 +70,22 @@ function ContactContent() {
           <div className="space-y-6">
             <div className="stitch-card p-6 space-y-5 reveal-up reveal-delay-1">
               <h2 className="stitch-title text-2xl font-bold">Location & Access</h2>
-              <p className="text-[#46605f] text-sm">Easy access and quick support for your appointment needs.</p>
+              <p className="text-muted text-sm">Easy access and quick support for your appointment needs.</p>
               <div className="stitch-divider" />
 
               <div className="flex items-start gap-3">
-                <span className="material-symbols-outlined text-[#1b6b67] mt-0.5">location_on</span>
+                <span className="material-symbols-outlined text-accent mt-0.5">location_on</span>
                 <div>
-                  <p className="text-xs uppercase tracking-widest text-[#46605f] font-bold">Address</p>
-                  <p className="text-[#0b3b3c] font-medium">{address}</p>
+                  <p className="text-xs  text-muted font-bold">Address</p>
+                  <p className="text-ink font-medium">{address}</p>
                 </div>
               </div>
 
               <a href={`tel:${phone}`} className="flex items-start gap-3 hover:opacity-85 transition-opacity">
-                <span className="material-symbols-outlined text-[#1b6b67] mt-0.5">call</span>
+                <span className="material-symbols-outlined text-accent mt-0.5">call</span>
                 <div>
-                  <p className="text-xs uppercase tracking-widest text-[#46605f] font-bold">Phone</p>
-                  <p className="text-[#0b3b3c] font-medium">{phone || "Contact us for details"}</p>
+                  <p className="text-xs  text-muted font-bold">Phone</p>
+                  <p className="text-ink font-medium">{phone || "Contact us for details"}</p>
                 </div>
               </a>
 
@@ -95,39 +95,39 @@ function ContactContent() {
                 rel="noopener noreferrer"
                 className="flex items-start gap-3 hover:opacity-85 transition-opacity"
               >
-                <span className="material-symbols-outlined text-[#25D366] mt-0.5">chat</span>
+                <span className="material-symbols-outlined text-whatsapp mt-0.5">chat</span>
                 <div>
-                  <p className="text-xs uppercase tracking-widest text-[#46605f] font-bold">WhatsApp</p>
-                  <p className="text-[#0b3b3c] font-medium">Chat with us instantly</p>
+                  <p className="text-xs  text-muted font-bold">WhatsApp</p>
+                  <p className="text-ink font-medium">Chat with us instantly</p>
                 </div>
               </a>
 
               <div className="flex items-start gap-3">
-                <span className="material-symbols-outlined text-[#1b6b67] mt-0.5">schedule</span>
+                <span className="material-symbols-outlined text-accent mt-0.5">schedule</span>
                 <div>
-                  <p className="text-xs uppercase tracking-widest text-[#46605f] font-bold">Working Hours</p>
-                  <p className="text-[#0b3b3c] font-medium">Mon-Fri: 9AM-6PM | Sat: 10AM-4PM</p>
+                  <p className="text-xs  text-muted font-bold">Working Hours</p>
+                  <p className="text-ink font-medium">Mon-Fri: 9AM-6PM | Sat: 10AM-4PM</p>
                 </div>
               </div>
 
               <div className="pt-2 flex gap-3">
                 <a
                   href="#"
-                  className="w-10 h-10 rounded-full bg-[#e4edeb] text-[#0b3b3c] flex items-center justify-center hover:bg-[#1b6b67] hover:text-white transition-all"
+                  className="w-10 h-10 rounded-full bg-paper-3 text-ink flex items-center justify-center hover:bg-accent hover:text-white transition-colors"
                   aria-label="Website"
                 >
                   <span className="material-symbols-outlined text-[20px]">public</span>
                 </a>
                 <a
                   href="#"
-                  className="w-10 h-10 rounded-full bg-[#e4edeb] text-[#0b3b3c] flex items-center justify-center hover:bg-[#1b6b67] hover:text-white transition-all"
+                  className="w-10 h-10 rounded-full bg-paper-3 text-ink flex items-center justify-center hover:bg-accent hover:text-white transition-colors"
                   aria-label="Share"
                 >
                   <span className="material-symbols-outlined text-[20px]">share</span>
                 </a>
                 <a
                   href="#"
-                  className="w-10 h-10 rounded-full bg-[#e4edeb] text-[#0b3b3c] flex items-center justify-center hover:bg-[#1b6b67] hover:text-white transition-all"
+                  className="w-10 h-10 rounded-full bg-paper-3 text-ink flex items-center justify-center hover:bg-accent hover:text-white transition-colors"
                   aria-label="Gallery"
                 >
                   <span className="material-symbols-outlined text-[20px]">photo_camera</span>
@@ -139,7 +139,7 @@ function ContactContent() {
           <div className="space-y-6">
             <div className="stitch-card p-6 reveal-up reveal-delay-2">
               {hasMap ? (
-                <div className="relative w-full min-h-[340px] rounded-[16px] overflow-hidden border border-[#c99a3b]/20">
+                <div className="relative w-full min-h-[340px] rounded-[16px] overflow-hidden border border-accent-soft/20">
                   <iframe
                     title={`${client} Location`}
                     src={mapSrc}
@@ -153,8 +153,8 @@ function ContactContent() {
                   />
                 </div>
               ) : (
-                <div className="relative w-full min-h-[340px] rounded-[16px] overflow-hidden border border-[#cfdcd9]/40 bg-[#e4edeb] flex items-center justify-center">
-                  <div className="text-center text-[#46605f]">
+                <div className="relative w-full min-h-[340px] rounded-[16px] overflow-hidden border border-rule/40 bg-paper-3 flex items-center justify-center">
+                  <div className="text-center text-muted">
                     <span className="material-symbols-outlined text-4xl">map</span>
                     <p className="mt-2 text-sm">Map preview unavailable. Add lat and long params.</p>
                   </div>
@@ -166,14 +166,14 @@ function ContactContent() {
               <h2 className="stitch-title text-2xl font-bold mb-4">Common Questions</h2>
               <div className="space-y-3">
                 {faqItems.map((item, index) => (
-                  <div key={index} className="rounded-[12px] bg-[#e4edeb] border border-[#cfdcd9]/30">
+                  <div key={index} className="rounded-[12px] bg-paper-3 border border-rule/30">
                     <button
                       onClick={() => setOpenFaq(openFaq === index ? null : index)}
                       className="w-full flex items-center justify-between p-4 text-left"
                     >
-                      <span className="font-semibold text-[#0b3b3c]">{item.q}</span>
+                      <span className="font-bold text-ink">{item.q}</span>
                       <span
-                        className={`material-symbols-outlined text-[#46605f] transition-transform ${
+                        className={`material-symbols-outlined text-muted transition-transform ${
                           openFaq === index ? "rotate-180" : ""
                         }`}
                       >
@@ -181,21 +181,21 @@ function ContactContent() {
                       </span>
                     </button>
                     {openFaq === index && (
-                      <div className="px-4 pb-4 text-sm text-[#46605f] leading-relaxed">{item.a}</div>
+                      <div className="px-4 pb-4 text-sm text-muted leading-relaxed">{item.a}</div>
                     )}
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="bg-[#0b3b3c] text-white rounded-[24px] p-7 editorial-shadow reveal-up reveal-delay-3">
+            <div className="bg-ink text-white rounded-[24px] p-7 editorial-shadow reveal-up reveal-delay-3">
               <h3 className="stitch-title text-white text-2xl font-bold mb-2">Ready to visit {client}?</h3>
               <p className="text-white/80 text-sm mb-5">
                 Book your appointment today and connect directly with our team.
               </p>
               <DynamicLink
                 href="/booking"
-                className="inline-flex items-center gap-2 bg-[#0b3b3c] hover:bg-[#1b6b67] text-white font-bold py-3 px-6 rounded-[10px] transition-all"
+                className="inline-flex items-center gap-2 bg-ink hover:bg-accent text-white font-bold py-3 px-6 rounded-[10px] transition-colors"
               >
                 <span className="material-symbols-outlined text-lg">calendar_today</span>
                 Book Appointment
@@ -212,8 +212,8 @@ export default function ContactPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0b3b3c]" />
+        <div className="flex items-center justify-center min-h-dvh">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-ink" />
         </div>
       }
     >

@@ -22,7 +22,7 @@ export default function AnimatedStat({ value, label }: { value: string; label: s
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.3 }
     );
     observer.observe(element);
     return () => observer.disconnect();
@@ -46,13 +46,13 @@ export default function AnimatedStat({ value, label }: { value: string; label: s
     return () => cancelAnimationFrame(raf);
   }, [inView, isNumeric, targetNumber]);
 
-  // Show the final value until the count-up starts so there is no layout shift or flash of "0"
+  // The finished number shows until the count-up begins, so nothing flashes or shifts.
   const shown = isNumeric ? `${inView ? count : targetNumber}${suffix}` : value;
 
   return (
     <div ref={ref}>
-      <div className="font-display text-4xl font-semibold tabular-nums text-white md:text-5xl">{shown}</div>
-      <p className="mt-2 text-[0.95rem] text-teal-light">{label}</p>
+      <div className="font-display text-section font-bold tabular-nums text-paper">{shown}</div>
+      <p className="mt-2 text-sm text-accent-soft">{label}</p>
     </div>
   );
 }
