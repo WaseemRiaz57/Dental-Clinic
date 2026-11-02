@@ -3,8 +3,7 @@ import AnimatedStat from "../components/AnimatedStat";
 import AppointmentForm from "./components/AppointmentForm";
 
 /* ═══════════════════════════════════════════════════════════
-   PIXEL-PERFECT STITCH REPLICA — 100% DYNAMIC
-   Matches: projects/6076570405638608677/screens/142db5f0da084108b7a5e50c0ca5d521
+   HOME PAGE — 100% DYNAMIC (URL searchParams drive all content)
    All clinic data injected via URL searchParams.
    ═══════════════════════════════════════════════════════════ */
 
@@ -272,7 +271,6 @@ export default async function Home({
     "gallery_subtitle",
     "A glimpse inside our sanctuary of dental care."
   );
-  const galleryButtonText = getParam("gallery_button_text", "View All Works");
   const galleryLabel1 = getParam("gallery_label_1", "Waiting Lounge");
   const galleryLabel2 = getParam("gallery_label_2", "Surgery Theater");
   const teamImageAlt = getParam("team_image_alt", `${clinicName} team`);
@@ -458,472 +456,392 @@ export default async function Home({
     address.split(",").map((item) => item.trim()).filter(Boolean).at(-1) ||
     "Lahore";
 
+  const heroWords = `${heroTitlePre} ${heroTitleItalic} ${heroTitlePost}`.split(/\s+/).filter(Boolean);
+  const featuredIdx = Math.max(0, testimonials.findIndex((t) => t.featured));
+  const featuredReview = testimonials[featuredIdx];
+  const otherReviews = testimonials.map((t, i) => ({ ...t, i })).filter((t) => t.i !== featuredIdx);
+  const liveSocials = socialLinks.filter((s) => s.href && s.href !== "#");
+
   return (
     <>
-      {/* ══════════════════════════════════════════
-          HERO SECTION (exact Stitch replica)
-          ══════════════════════════════════════════ */}
-      <section className="relative pt-32 pb-24 overflow-hidden mesh-accent" id="home">
-        {/* Abstract Circles */}
-        <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-[#4DB8E8]/10 rounded-full blur-[100px]" />
-        <div className="absolute bottom-[0%] left-[-5%] w-[400px] h-[400px] bg-[#1B3A6B]/5 rounded-full blur-[80px]" />
-
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div className="z-10 reveal-up">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#d1e4ff] text-[#001d35] text-xs font-bold mb-6 tracking-widest uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0061a2]" /> {heroBadge}
-            </div>
-            <h1 className="stitch-display text-5xl lg:text-7xl font-bold mb-6 leading-tight">
-              {heroTitlePre} <span className="italic font-normal">{heroTitleItalic}</span> {heroTitlePost}
-            </h1>
-            <p className="text-[#44474f] text-lg mb-10 max-w-lg leading-relaxed">
-              {heroDescription}{" "}
-              <span className="font-semibold text-[#1B3A6B]">{clinicName}</span>.
+      {/* ═══════════ HERO ═══════════ */}
+      <section className="relative overflow-hidden pt-28 pb-20 md:pt-36 md:pb-28" id="home">
+        <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 md:px-8 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <p className="hero-fade mb-7 flex items-center gap-3 text-[0.95rem] font-medium text-ink-soft" style={{ animationDelay: "0.05s" }}>
+              <span aria-hidden className="h-2 w-2 rounded-full bg-gold" />
+              {heroBadge}
             </p>
-            <div className="flex flex-wrap gap-4 mb-12">
-              <a href={ctaPrimaryHref} className="bg-[#002452] text-white px-8 py-4 rounded-[10px] font-bold text-base hover:shadow-lg transition-all">
+
+            <h1 className="mb-8 font-display text-[clamp(2.6rem,6.2vw,5.4rem)] font-semibold leading-[1.02] text-teal-deep">
+              {heroWords.map((w, i) => (
+                <span key={i} className="mr-[0.22em] inline-block overflow-hidden pb-[0.08em] align-bottom">
+                  <span className="hero-rise" style={{ animationDelay: `${0.1 + i * 0.07}s` }}>
+                    {w}
+                  </span>
+                </span>
+              ))}
+            </h1>
+
+            <p className="hero-fade mb-10 max-w-[34rem] text-lg leading-relaxed text-ink-soft" style={{ animationDelay: "0.7s" }}>
+              {heroDescription} <span className="font-semibold text-ink">{clinicName}</span>.
+            </p>
+
+            <div className="hero-fade mb-14 flex flex-wrap items-center gap-4" style={{ animationDelay: "0.85s" }}>
+              <a href={ctaPrimaryHref} className="btn btn-primary">
                 {ctaPrimaryText}
+                <span className="arrow material-symbols-outlined !text-xl" aria-hidden>arrow_forward</span>
               </a>
-              <a href={ctaSecondaryHref} className="border-2 border-[#002452] text-[#002452] px-8 py-4 rounded-[10px] font-bold text-base hover:bg-[#002452]/5 transition-all">
+              <a href={ctaSecondaryHref} className="btn btn-ghost">
                 {ctaSecondaryText}
               </a>
             </div>
-            {/* Trust Badges */}
-            <div className="grid grid-cols-3 gap-6 pt-10 border-t border-[#c4c6d0]/30">
-              {trustStats.map((item) => (
-                <div key={item.label}>
-                  <div className="text-3xl font-bold stitch-display">{item.value}</div>
-                  <div className="text-sm text-[#44474f]">{item.label}</div>
+
+            <dl className="hero-fade grid max-w-xl grid-cols-3" style={{ animationDelay: "1s" }}>
+              {trustStats.map((item, i) => (
+                <div key={item.label} className={`pr-3 sm:pr-8 ${i > 0 ? "border-l border-line pl-4 sm:pl-8" : ""}`}>
+                  <dt className="sr-only">{item.label}</dt>
+                  <dd className="font-display text-2xl font-semibold text-teal-deep sm:text-3xl">{item.value}</dd>
+                  <dd className="text-sm text-ink-soft">{item.label}</dd>
                 </div>
               ))}
-            </div>
+            </dl>
           </div>
 
-          <div className="relative group reveal-up reveal-delay-2">
-            <div className="relative w-full aspect-[10/11] rounded-[16px] overflow-hidden border-[12px] border-white shadow-2xl z-10">
+          <div className="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
+            <div className="hero-arch aspect-[4/5] w-full bg-mist shadow-[var(--shadow-lift)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                alt={`${clinicName} — modern dental clinic`}
-                className="w-full h-full object-cover"
-                src={heroImage}
-              />
+              <img alt={`${clinicName} — modern dental clinic`} className="h-full w-full object-cover" src={heroImage} fetchPriority="high" />
             </div>
-            {/* Floating Rating Card */}
-            <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-[16px] editorial-shadow z-20 flex items-center gap-4 border border-[#4DB8E8]/10">
-              <div className="w-12 h-12 rounded-full bg-[#d1e4ff] flex items-center justify-center text-[#002452]">
-                <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-              </div>
+            <div className="hero-fade absolute -left-2 bottom-8 flex items-center gap-3 rounded-2xl bg-enamel px-5 py-4 shadow-[var(--shadow-lift)] md:-left-8" style={{ animationDelay: "1.2s" }}>
+              <span className="material-symbols-outlined text-gold" style={{ fontVariationSettings: "'FILL' 1" }} aria-hidden>star</span>
               <div>
-                <div className="font-bold text-lg text-[#002452]">{ratingValue}</div>
-                <div className="text-xs text-[#44474f] uppercase tracking-widest font-bold">{ratingLabel}</div>
+                <div className="font-display text-xl font-semibold leading-none text-teal-deep">{ratingValue}</div>
+                <div className="mt-1 text-sm text-ink-soft">{ratingLabel}</div>
               </div>
             </div>
-            {/* Artistic Circle */}
-            <div className="absolute -top-10 -right-10 w-48 h-48 border border-[#4DB8E8]/30 rounded-full animate-pulse" />
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          SERVICES SECTION
-          ══════════════════════════════════════════ */}
-      <section className="py-28 bg-white" id="services">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20 reveal-up">
-            <h2 className="stitch-display text-4xl lg:text-5xl font-bold mb-4">{servicesTitle}</h2>
-            <p className="text-[#44474f] max-w-2xl mx-auto">{servicesSubtitle}</p>
+      {/* ═══════════ SERVICES ═══════════ */}
+      <section className="bg-enamel py-24 md:py-32" id="services">
+        <div className="mx-auto grid max-w-7xl gap-12 px-5 md:px-8 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-4">
+            <div className="lg:sticky lg:top-28">
+              <h2 className="mb-5 font-display text-4xl font-semibold leading-[1.08] text-teal-deep md:text-5xl">{servicesTitle}</h2>
+              <p className="mb-8 max-w-sm text-ink-soft">{servicesSubtitle}</p>
+              <a href="#appointment" className="btn btn-primary">
+                {ctaPrimaryText}
+                <span className="arrow material-symbols-outlined !text-xl" aria-hidden>arrow_forward</span>
+              </a>
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((svc, idx) => (
-              <div key={svc.title} className={`group bg-[#f0f4fb] rounded-[16px] overflow-hidden border border-[#4DB8E8]/20 hover:border-[#0061a2]/40 transition-all duration-300 reveal-up reveal-delay-${(idx % 3) + 1}`}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={svc.image}
-                  alt={`${svc.title} service`}
-                  className="h-48 w-full object-cover rounded-t-[16px]"
-                />
-                <div className="p-8">
-                  <span className="material-symbols-outlined text-4xl text-[#0061a2] mb-6 block">{svc.icon}</span>
-                  <h3 className="text-xl font-bold text-[#002452] mb-4">{svc.title}</h3>
-                  <p className="text-[#44474f] text-sm leading-relaxed mb-6">{svc.desc}</p>
-                  <a className="text-[#0061a2] font-bold text-xs uppercase tracking-widest flex items-center gap-2" href="#">
-                    {serviceExploreText} <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                  </a>
-                </div>
-              </div>
+
+          <ul className="border-b border-line lg:col-span-8">
+            {services.map((svc) => (
+              <li key={svc.title} className="border-t border-line">
+                <a href="#appointment" className="group flex items-center gap-5 px-1 py-6 transition-colors hover:bg-porcelain md:gap-8 md:px-4">
+                  <span className="arch block h-24 w-[4.5rem] shrink-0 bg-mist md:h-28 md:w-20">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={svc.image} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110" />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="mb-1.5 flex items-center gap-2 font-display text-xl font-semibold text-teal-deep md:text-2xl">
+                      <span className="material-symbols-outlined text-teal !text-[1.35rem]" aria-hidden>{svc.icon}</span>
+                      {svc.title}
+                    </span>
+                    <span className="block max-w-xl text-[0.97rem] leading-relaxed text-ink-soft">{svc.desc}</span>
+                  </span>
+                  <span className="hidden shrink-0 items-center gap-2 text-sm font-semibold text-teal sm:flex">
+                    {serviceExploreText}
+                    <span className="material-symbols-outlined !text-xl transition-transform duration-300 group-hover:translate-x-1.5" aria-hidden>arrow_forward</span>
+                  </span>
+                </a>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          WHY CHOOSE US (Navy Gradient)
-          ══════════════════════════════════════════ */}
-      <section className="py-24 bg-gradient-to-br from-[#1B3A6B] to-[#2E7EC4] text-white">
-        <div className="max-w-7xl mx-auto px-6">
-          {/* Counters */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-24 text-center reveal-up">
-            {whyStats.map((stat) => (
-              <div key={stat.label} className="p-4">
+      {/* ═══════════ NUMBERS + PHILOSOPHY ═══════════ */}
+      <section className="bg-teal-deep py-24 text-white md:py-28">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <div className="mb-20 grid grid-cols-2 gap-y-10 md:grid-cols-4">
+            {whyStats.map((stat, i) => (
+              <div key={stat.label} className={`px-0 md:px-8 ${i > 0 ? "md:border-l md:border-white/15" : "md:pl-0"} ${i % 2 === 1 ? "pl-6 border-l border-white/15 md:pl-8" : ""}`}>
                 <AnimatedStat value={stat.value} label={stat.label} />
               </div>
             ))}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="reveal-up">
-              <h2 className="stitch-display !text-white text-4xl font-bold mb-8 italic">{philosophyTitle}</h2>
-              <p className="text-lg text-white/80 mb-10 leading-relaxed">
-                {philosophyBody}
-              </p>
+          <div className="grid items-center gap-14 lg:grid-cols-12">
+            <div className="lg:col-span-6">
+              <h2 className="mb-6 font-display text-4xl font-semibold leading-[1.08] md:text-5xl">{philosophyTitle}</h2>
+              <p className="mb-10 max-w-xl text-lg leading-relaxed text-white/75">{philosophyBody}</p>
               <ul className="space-y-4">
                 {philosophyBullets.map((item) => (
-                  <li key={item} className="flex items-center gap-4 text-white/90">
-                    <span className="material-symbols-outlined text-[#4DB8E8]">check_circle</span>
+                  <li key={item} className="flex items-start gap-4 text-white/90">
+                    <span className="material-symbols-outlined mt-0.5 !text-xl text-gold" aria-hidden>check</span>
                     {item}
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="relative rounded-[20px] overflow-hidden group reveal-up reveal-delay-2">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                alt={teamImageAlt}
-                className="w-full h-[400px] object-cover opacity-80 group-hover:opacity-100 transition-all"
-                loading="lazy"
-                src={sectionImage1}
-              />
-              <div className="absolute inset-0 bg-[#002452]/20 flex items-center justify-center">
-                <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center cursor-pointer border border-white/40 hover:bg-white/30 transition-all">
-                  <span className="material-symbols-outlined text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>play_arrow</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════
-          MEET THE DOCTOR
-          ══════════════════════════════════════════ */}
-      <section className="py-28 bg-[#f7f9ff]" id="about">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
-            <div className="relative reveal-up">
-              <div className="w-full aspect-[4/5] bg-[#dfe3ea] rounded-[20px] overflow-hidden editorial-shadow">
+            <div className="lg:col-span-5 lg:col-start-8">
+              <div className="arch mx-auto aspect-[4/5] max-w-sm bg-teal lg:max-w-none">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  alt={doctorImageAlt}
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 border-[3px] border-[#4DB8E8]"
-                  src={doctorImage}
-                />
-              </div>
-              <div className="absolute -bottom-10 -right-10 hidden lg:block bg-[#4DB8E8] text-white p-10 rounded-[20px] shadow-xl">
-                <div className="stitch-display !text-white text-3xl font-bold">{doctorYearsValue}</div>
-                <div className="text-xs uppercase font-bold tracking-widest">{doctorYearsLabel}</div>
-              </div>
-            </div>
-            <div className="reveal-up reveal-delay-2">
-              <h2 className="stitch-display text-5xl font-bold mb-4 leading-tight">{doctorSectionTitle}</h2>
-              <h3 className="text-2xl text-[#0061a2] mb-8">{doctorName}, <span className="text-lg opacity-70">{doctorCredentials}</span></h3>
-              <p className="text-[#44474f] leading-relaxed mb-8">
-                {doctorBio}
-              </p>
-              <div className="space-y-6">
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#1b3a6b] flex items-center justify-center text-[#89a5dd] shrink-0">
-                    <span className="material-symbols-outlined">school</span>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-[#002452]">{doctorQual1Title}</h4>
-                    <p className="text-sm text-[#44474f]">{doctorQual1Body}</p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#1b3a6b] flex items-center justify-center text-[#89a5dd] shrink-0">
-                    <span className="material-symbols-outlined">verified</span>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-[#002452]">{doctorQual2Title}</h4>
-                    <p className="text-sm text-[#44474f]">{doctorQual2Body}</p>
-                  </div>
-                </div>
+                <img alt={teamImageAlt} className="h-full w-full object-cover" loading="lazy" src={sectionImage1} />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          GALLERY (Masonry Layout)
-          ══════════════════════════════════════════ */}
-      <section className="py-28 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 reveal-up">
-            <div>
-              <h2 className="stitch-display text-4xl font-bold mb-4">{galleryTitle}</h2>
-              <p className="text-[#44474f]">{gallerySubtitle}</p>
+      {/* ═══════════ DOCTOR ═══════════ */}
+      <section className="py-24 md:py-32" id="about">
+        <div className="mx-auto grid max-w-7xl items-center gap-16 px-5 md:px-8 lg:grid-cols-12">
+          <div className="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
+            <div className="arch aspect-[4/5] bg-mist shadow-[var(--shadow-soft)]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img alt={doctorImageAlt} className="h-full w-full object-cover" loading="lazy" src={doctorImage} />
             </div>
-            <div className="h-px bg-[#c4c6d0]/30 flex-grow mx-8 hidden md:block mb-4" />
-            <button className="text-[#002452] font-bold uppercase tracking-widest text-xs flex items-center gap-2">
-              {galleryButtonText} <span className="material-symbols-outlined text-sm">open_in_new</span>
-            </button>
+            <div className="absolute -bottom-5 right-2 grid h-32 w-32 place-content-center rounded-full bg-gold text-center text-teal-deep shadow-[var(--shadow-lift)] md:-right-6">
+              <div className="font-display text-3xl font-semibold leading-none">{doctorYearsValue}</div>
+              <div className="mt-1 px-3 text-xs font-medium leading-tight">{doctorYearsLabel}</div>
+            </div>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 h-[800px] reveal-up reveal-delay-1">
-            {/* Large featured image */}
-            <div className="col-span-2 row-span-2 relative group overflow-hidden rounded-[16px]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img alt={galleryImageAlt1} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" src={galleryImage1} />
-              <div className="absolute inset-0 bg-[#002452]/40 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
-                <span className="text-white stitch-display !text-white text-2xl italic">{galleryLabel1}</span>
-              </div>
-            </div>
-            {/* Surgery Room */}
-            <div className="col-span-2 row-span-1 relative group overflow-hidden rounded-[16px]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img alt={galleryImageAlt2} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src={galleryImage2} />
-              <div className="absolute inset-0 bg-[#0061a2]/40 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
-                <span className="text-white stitch-display !text-white text-2xl italic">{galleryLabel2}</span>
-              </div>
-            </div>
-            {/* Equipment */}
-            <div className="relative group overflow-hidden rounded-[16px]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img alt={galleryImageAlt3} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src={galleryImage3} />
-            </div>
-            {/* X-ray Room */}
-            <div className="relative group overflow-hidden rounded-[16px]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img alt={galleryImageAlt4} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src={galleryImage4} />
-            </div>
+
+          <div className="lg:col-span-6 lg:col-start-7">
+            <p className="mb-3 text-[0.95rem] font-medium text-teal">{doctorSectionTitle}</p>
+            <h2 className="mb-2 font-display text-4xl font-semibold leading-[1.08] text-teal-deep md:text-5xl">{doctorName}</h2>
+            <p className="mb-8 text-lg text-ink-soft">{doctorCredentials}</p>
+            <p className="mb-10 max-w-xl leading-[1.75] text-ink-soft">{doctorBio}</p>
+            <ul className="border-b border-line">
+              {[
+                { icon: "school", title: doctorQual1Title, body: doctorQual1Body },
+                { icon: "verified", title: doctorQual2Title, body: doctorQual2Body },
+              ].map((q) => (
+                <li key={q.title} className="flex gap-4 border-t border-line py-5">
+                  <span className="material-symbols-outlined mt-0.5 text-teal" aria-hidden>{q.icon}</span>
+                  <div>
+                    <h3 className="font-display text-lg font-semibold text-teal-deep">{q.title}</h3>
+                    <p className="text-[0.95rem] text-ink-soft">{q.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          TESTIMONIALS
-          ══════════════════════════════════════════ */}
-      <section className="py-28 bg-[#f0f4fb]">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="stitch-display text-4xl font-bold text-center mb-20 italic reveal-up">{testimonialsTitle}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((item, idx) => (
-              <div
-                key={item.name}
-                className={`bg-white p-10 rounded-[16px] editorial-shadow relative reveal-up reveal-delay-${idx + 1} ${
-                  item.featured ? "scale-105 z-10 border-t-4 border-[#0061a2]" : ""
-                }`}
-              >
-                <div className="flex text-[#4DB8E8] mb-6">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <span key={i} className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                  ))}
-                </div>
-                <p className="text-[#171c21] text-lg leading-relaxed mb-8">&ldquo;{item.quote}&rdquo;</p>
-                <div className="flex items-center gap-4">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={testimonialAvatars[idx]}
-                    alt={`${item.name} profile`}
-                    className="w-12 h-12 rounded-full object-cover border-2 border-[#4DB8E8]"
-                  />
-                  <div>
-                    <div className="font-bold text-[#002452]">{item.name}</div>
-                    <div className="text-xs text-[#44474f] uppercase font-bold">{item.role}</div>
-                  </div>
-                </div>
-              </div>
+      {/* ═══════════ GALLERY ═══════════ */}
+      <section className="bg-enamel py-24 md:py-32">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <div className="mb-12 max-w-2xl">
+            <h2 className="mb-4 font-display text-4xl font-semibold leading-[1.08] text-teal-deep md:text-5xl">{galleryTitle}</h2>
+            <p className="text-ink-soft">{gallerySubtitle}</p>
+          </div>
+          <div className="grid auto-rows-[clamp(8.5rem,24vw,15rem)] grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
+            {[
+              { src: galleryImage1, alt: galleryImageAlt1, label: galleryLabel1, cls: "col-span-2 row-span-2" },
+              { src: galleryImage2, alt: galleryImageAlt2, label: galleryLabel2, cls: "col-span-2" },
+              { src: galleryImage3, alt: galleryImageAlt3, label: galleryImageAlt3, cls: "" },
+              { src: galleryImage4, alt: galleryImageAlt4, label: galleryImageAlt4, cls: "" },
+            ].map((g, i) => (
+              <figure key={i} className={`group relative overflow-hidden rounded-3xl bg-mist ${g.cls}`}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img alt={g.alt} loading="lazy" src={g.src} className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+                <figcaption className="absolute bottom-3 left-3 rounded-full bg-enamel/95 px-4 py-1.5 text-sm font-medium text-teal-deep backdrop-blur">
+                  {g.label}
+                </figcaption>
+              </figure>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          APPOINTMENT SECTION (with booking form)
-          ══════════════════════════════════════════ */}
-      <section className="py-28 bg-[#002452] relative overflow-hidden" id="appointment">
-        <div className="absolute inset-0 mesh-accent opacity-20" />
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            <div className="text-white reveal-up">
-              <h2 className="stitch-display !text-white text-5xl font-bold mb-8">{appointmentTitle}</h2>
-              <p className="text-xl text-white/70 mb-12">{appointmentSubtitle}</p>
-              <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <span className="material-symbols-outlined text-[#0061a2]">schedule</span>
-                  <div>
-                    <h4 className="font-bold">{hoursTitle}</h4>
-                    <p className="text-sm text-white/60">{hoursSubtitle}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <span className="material-symbols-outlined text-[#0061a2]">location_on</span>
-                  <div>
-                    <h4 className="font-bold">{address}</h4>
-                    <p className="text-sm text-white/60">{locationTag}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+      {/* ═══════════ REVIEWS ═══════════ */}
+      <section className="bg-mist py-24 md:py-32" id="reviews">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
+            <h2 className="max-w-xl font-display text-4xl font-semibold leading-[1.08] text-teal-deep md:text-5xl">{testimonialsTitle}</h2>
+            <p className="flex items-center gap-3 text-ink-soft">
+              <span className="material-symbols-outlined text-gold" style={{ fontVariationSettings: "'FILL' 1" }} aria-hidden>star</span>
+              <span><span className="font-display text-xl font-semibold text-teal-deep">{ratingValue}</span> {ratingLabel}</span>
+            </p>
+          </div>
 
-            {/* Booking Form */}
-            <div className="bg-white p-8 md:p-12 rounded-[24px] editorial-shadow reveal-up reveal-delay-2">
-              <AppointmentForm
-                clinicName={clinicName}
-                targetPhone={cleanPhone}
-                formNameLabel={formNameLabel}
-                formNamePlaceholder={formNamePlaceholder}
-                formPhoneLabel={formPhoneLabel}
-                formPhonePlaceholder={formPhonePlaceholder}
-                formServiceLabel={formServiceLabel}
-                formServiceOptions={formServiceOptions}
-                formDateLabel={formDateLabel}
-                formTimeLabel={formTimeLabel}
-                formMessageLabel={formMessageLabel}
-                formMessagePlaceholder={formMessagePlaceholder}
-                formSubmitText={formSubmitText}
-                whatsappButtonText={whatsappButtonText}
-              />
+          <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
+            <figure className="flex flex-col justify-between rounded-[2rem] bg-teal-deep p-8 text-white md:p-12 lg:col-span-7">
+              <blockquote className="mb-10 font-display text-2xl font-medium leading-snug md:text-[2rem]">
+                &ldquo;{featuredReview.quote}&rdquo;
+              </blockquote>
+              <figcaption className="flex items-center gap-4">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={testimonialAvatars[featuredIdx]} alt="" className="h-14 w-14 rounded-full object-cover ring-2 ring-gold" />
+                <div>
+                  <div className="font-semibold">{featuredReview.name}</div>
+                  <div className="text-sm text-teal-light">{featuredReview.role}</div>
+                </div>
+              </figcaption>
+            </figure>
+
+            <div className="grid gap-6 lg:col-span-5">
+              {otherReviews.map((item) => (
+                <figure key={item.name} className="rounded-[2rem] bg-enamel p-7 md:p-8">
+                  <blockquote className="mb-6 leading-relaxed text-ink">&ldquo;{item.quote}&rdquo;</blockquote>
+                  <figcaption className="flex items-center gap-3">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={testimonialAvatars[item.i]} alt="" className="h-11 w-11 rounded-full object-cover" />
+                    <div>
+                      <div className="font-semibold text-teal-deep">{item.name}</div>
+                      <div className="text-sm text-ink-soft">{item.role}</div>
+                    </div>
+                  </figcaption>
+                </figure>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          CONTACT & MAP SECTION
-          ══════════════════════════════════════════ */}
-      <section className="py-28 bg-white" id="contact">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="space-y-12 reveal-up">
-              <div>
-                <h2 className="stitch-display text-4xl font-bold mb-4">{contactTitle}</h2>
-                <p className="text-[#44474f]">{contactSubtitle.replace("{city}", cityFallback)}</p>
-              </div>
-              <div className="space-y-8">
-                <div className="flex gap-6">
-                  <span className="material-symbols-outlined text-[#0061a2] text-2xl">location_on</span>
-                  <div>
-                    <h4 className="font-bold text-[#002452] mb-1">{contactAddressLabel}</h4>
-                    <p className="text-[#44474f] text-sm leading-relaxed">{address}</p>
-                  </div>
+      {/* ═══════════ APPOINTMENT ═══════════ */}
+      <section className="bg-teal-deep py-24 text-white md:py-32" id="appointment">
+        <div className="mx-auto grid max-w-7xl items-start gap-14 px-5 md:px-8 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <h2 className="mb-6 font-display text-4xl font-semibold leading-[1.08] md:text-5xl">{appointmentTitle}</h2>
+            <p className="mb-12 max-w-md text-lg leading-relaxed text-white/75">{appointmentSubtitle}</p>
+            <ul className="space-y-6">
+              <li className="flex gap-4">
+                <span className="material-symbols-outlined text-gold" aria-hidden>schedule</span>
+                <div>
+                  <p className="font-semibold">{hoursTitle}</p>
+                  <p className="text-sm text-white/65">{hoursSubtitle}</p>
                 </div>
-                <div className="flex gap-6">
-                  <span className="material-symbols-outlined text-[#0061a2] text-2xl">call</span>
-                  <div>
-                    <h4 className="font-bold text-[#002452] mb-1">{contactPhoneLabel}</h4>
-                    <p className="text-[#44474f] text-sm leading-relaxed">{phone}</p>
-                  </div>
+              </li>
+              <li className="flex gap-4">
+                <span className="material-symbols-outlined text-gold" aria-hidden>location_on</span>
+                <div>
+                  <p className="font-semibold">{address}</p>
+                  <p className="text-sm text-white/65">{locationTag}</p>
                 </div>
-                <div className="flex gap-6">
-                  <span className="material-symbols-outlined text-[#0061a2] text-2xl">mail</span>
-                  <div>
-                    <h4 className="font-bold text-[#002452] mb-1">{contactEmailLabel}</h4>
-                    <p className="text-[#44474f] text-sm">{email}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                {socialLinks.map((item) => (
-                  <a key={item.icon} className="w-10 h-10 rounded-full bg-[#1b3a6b] flex items-center justify-center text-[#89a5dd] hover:bg-[#0061a2] hover:text-white transition-all" href={item.href}>
+              </li>
+            </ul>
+          </div>
+
+          <div className="rounded-[2rem] bg-enamel p-6 text-ink shadow-[var(--shadow-lift)] md:p-10 lg:col-span-7">
+            <AppointmentForm
+              clinicName={clinicName}
+              targetPhone={cleanPhone}
+              formNameLabel={formNameLabel}
+              formNamePlaceholder={formNamePlaceholder}
+              formPhoneLabel={formPhoneLabel}
+              formPhonePlaceholder={formPhonePlaceholder}
+              formServiceLabel={formServiceLabel}
+              formServiceOptions={formServiceOptions}
+              formDateLabel={formDateLabel}
+              formTimeLabel={formTimeLabel}
+              formMessageLabel={formMessageLabel}
+              formMessagePlaceholder={formMessagePlaceholder}
+              formSubmitText={formSubmitText}
+              whatsappButtonText={whatsappButtonText}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ CONTACT ═══════════ */}
+      <section className="py-24 md:py-32" id="contact">
+        <div className="mx-auto grid max-w-7xl gap-12 px-5 md:px-8 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-5">
+            <h2 className="mb-4 font-display text-4xl font-semibold leading-[1.08] text-teal-deep md:text-5xl">{contactTitle}</h2>
+            <p className="mb-10 max-w-md text-ink-soft">{contactSubtitle.replace("{city}", cityFallback)}</p>
+            <ul className="border-b border-line">
+              {[
+                { icon: "location_on", label: contactAddressLabel, value: address, href: `https://maps.google.com/maps?q=${mapQuery}` },
+                { icon: "call", label: contactPhoneLabel, value: phone, href: `tel:+${cleanPhone}` },
+                { icon: "mail", label: contactEmailLabel, value: email, href: `mailto:${email}` },
+              ].map((row) => (
+                <li key={row.label} className="border-t border-line">
+                  <a href={row.href} className="group flex gap-5 py-5">
+                    <span className="material-symbols-outlined mt-0.5 text-teal" aria-hidden>{row.icon}</span>
+                    <span>
+                      <span className="block text-sm text-ink-soft">{row.label}</span>
+                      <span className="link-draw font-medium text-teal-deep group-hover:bg-[length:100%_1.5px]">{row.value}</span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            {liveSocials.length > 0 && (
+              <div className="mt-8 flex gap-3">
+                {liveSocials.map((item) => (
+                  <a key={item.icon} aria-label={item.icon.replace(/_/g, " ")} className="grid h-11 w-11 place-items-center rounded-full bg-mist text-teal-deep transition-colors hover:bg-teal-deep hover:text-white" href={item.href}>
                     <span className="material-symbols-outlined">{item.icon}</span>
                   </a>
                 ))}
               </div>
-            </div>
-            <div className="h-[500px] rounded-[24px] overflow-hidden bg-[#dfe3ea] border border-[#4DB8E8]/20 editorial-shadow reveal-up reveal-delay-2">
-              <iframe
-                allowFullScreen
-                height="100%"
-                src={mapUrl}
-                style={{ border: 0 }}
-                width="100%"
-                title={`${clinicName} location`}
-                loading="lazy"
-              />
-            </div>
+            )}
+          </div>
+          <div className="h-[22rem] overflow-hidden rounded-[2rem] bg-mist shadow-[var(--shadow-soft)] md:h-[30rem] lg:col-span-7">
+            <iframe allowFullScreen height="100%" width="100%" src={mapUrl} style={{ border: 0 }} title={`${clinicName} location`} loading="lazy" />
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          FOOTER
-          ══════════════════════════════════════════ */}
-      <footer className="bg-[#1B3A6B] text-white w-full pt-16 pb-8 border-t border-white/10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 px-8 max-w-7xl mx-auto">
-          <div>
-            <div className="stitch-display !text-white text-2xl font-bold mb-6 uppercase flex items-center">
+      {/* ═══════════ FOOTER ═══════════ */}
+      <footer className="bg-teal-deep pb-28 pt-16 text-white md:pb-10">
+        <div className="mx-auto grid max-w-7xl gap-12 px-5 md:grid-cols-12 md:px-8">
+          <div className="md:col-span-5">
+            <div className="mb-5 font-display text-2xl font-semibold">
               {logoUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={logoUrl}
-                  alt={`${clinicName} Logo`}
-                  className="h-10 w-auto object-contain"
-                />
+                <img src={logoUrl} alt={`${clinicName} logo`} className="h-10 w-auto object-contain" />
               ) : (
                 clinicName
               )}
             </div>
-            <p className="text-sm leading-relaxed text-white/70 mb-8 max-w-xs">
-              {footerTagline}
-            </p>
-            <div className="flex gap-4">
-              <div className="w-8 h-8 rounded-md border border-white/20 flex items-center justify-center hover:border-[#4DB8E8] transition-all cursor-pointer">
-                <span className="material-symbols-outlined text-sm">social_leaderboard</span>
-              </div>
-              <div className="w-8 h-8 rounded-md border border-white/20 flex items-center justify-center hover:border-[#4DB8E8] transition-all cursor-pointer">
-                <span className="material-symbols-outlined text-sm">alternate_email</span>
-              </div>
-            </div>
+            <p className="max-w-sm text-[0.95rem] leading-relaxed text-white/70">{footerTagline}</p>
           </div>
-          <div className="grid grid-cols-2 gap-8">
-            <div>
-              <h4 className="font-bold text-white mb-6 uppercase text-xs tracking-widest">{companyHeading}</h4>
-              <ul className="space-y-4 text-sm text-white/70">
-                {companyLinks.map((item) => (
-                  <li key={item.label}><a className="hover:text-[#4DB8E8] transition-all" href={item.href}>{item.label}</a></li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-white mb-6 uppercase text-xs tracking-widest">{supportHeading}</h4>
-              <ul className="space-y-4 text-sm text-white/70">
-                {supportLinks.map((item) => (
-                  <li key={item.label}><a className="hover:text-[#4DB8E8] transition-all" href={item.href}>{item.label}</a></li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div>
-            <h4 className="font-bold text-white mb-6 uppercase text-xs tracking-widest">{contactHeading}</h4>
-            <div className="space-y-4 text-sm text-white/70">
-              <p className="flex items-start gap-3">
-                <span className="material-symbols-outlined text-[#4DB8E8]">location_on</span>
-                {address}
-              </p>
-              <p className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-[#4DB8E8]">call</span>
-                {phone}
-              </p>
-              <p className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-[#4DB8E8]">mail</span>
-                {email}
-              </p>
-            </div>
+          <nav aria-label="Footer" className="grid grid-cols-2 gap-8 md:col-span-4">
+            {[
+              { heading: companyHeading, items: companyLinks },
+              { heading: supportHeading, items: supportLinks },
+            ].map((col) => (
+              <div key={col.heading}>
+                <h3 className="mb-4 font-display text-base font-semibold text-gold">{col.heading}</h3>
+                <ul className="space-y-3 text-[0.95rem] text-white/75">
+                  {col.items.map((item) => (
+                    <li key={item.label}>
+                      <a className="link-draw hover:text-white" href={item.href}>{item.label}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </nav>
+          <div className="md:col-span-3">
+            <h3 className="mb-4 font-display text-base font-semibold text-gold">{contactHeading}</h3>
+            <ul className="space-y-3 text-[0.95rem] text-white/75">
+              <li>{address}</li>
+              <li><a className="link-draw hover:text-white" href={`tel:+${cleanPhone}`}>{phone}</a></li>
+              <li><a className="link-draw hover:text-white" href={`mailto:${email}`}>{email}</a></li>
+            </ul>
           </div>
         </div>
-        <div className="mt-16 pt-8 border-t border-white/5 text-center px-8">
-          <p className="text-sm text-white/50">© {new Date().getFullYear()} {clinicName}. {copyrightSuffix}</p>
+        <div className="mx-auto mt-14 max-w-7xl border-t border-white/15 px-5 pt-6 text-sm text-white/55 md:px-8">
+          © {new Date().getFullYear()} {clinicName}. {copyrightSuffix}
         </div>
       </footer>
 
-      {/* Floating Mobile CTA */}
-      <a
-        className="md:hidden fixed bottom-6 right-6 w-14 h-14 bg-[#0061a2] text-white rounded-full flex items-center justify-center shadow-xl z-50 animate-bounce"
-        href={whatsappLink}
-      >
-        <span className="material-symbols-outlined">call</span>
-      </a>
+      {/* Mobile quick actions */}
+      <div className="fixed inset-x-3 bottom-3 z-40 flex gap-2 rounded-full bg-enamel p-2 shadow-[var(--shadow-lift)] md:hidden">
+        <a href="#appointment" className="btn btn-primary flex-1 !min-h-11">Book a visit</a>
+        <a href={whatsappLink} target="_blank" rel="noopener noreferrer" aria-label={whatsappButtonText} className="btn flex-1 !min-h-11 bg-[#1faa59] text-white">
+          WhatsApp
+        </a>
+      </div>
     </>
   );
 }
