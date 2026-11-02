@@ -49,27 +49,29 @@ export default function AppointmentForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
-          <label className="block text-xs font-bold uppercase tracking-widest text-[#44474f] mb-2">
+          <label htmlFor="f-name" className="mb-2 block text-sm font-medium text-ink-soft">
             {formNameLabel}
           </label>
           <input
+            id="f-name"
             name="name"
-            className="w-full bg-[#f0f4fb] border-none rounded-[10px] px-4 py-3 text-sm focus:ring-2 focus:ring-[#0061a2]/30 focus:bg-white transition-all outline-none"
+            className="field"
             placeholder={formNamePlaceholder}
             type="text"
             required
           />
         </div>
         <div>
-          <label className="block text-xs font-bold uppercase tracking-widest text-[#44474f] mb-2">
+          <label htmlFor="f-phone" className="mb-2 block text-sm font-medium text-ink-soft">
             {formPhoneLabel}
           </label>
           <input
+            id="f-phone"
             name="phone"
-            className="w-full bg-[#f0f4fb] border-none rounded-[10px] px-4 py-3 text-sm focus:ring-2 focus:ring-[#0061a2]/30 focus:bg-white transition-all outline-none"
+            className="field"
             placeholder={formPhonePlaceholder}
             type="tel"
             required
@@ -77,12 +79,13 @@ export default function AppointmentForm({
         </div>
       </div>
       <div>
-        <label className="block text-xs font-bold uppercase tracking-widest text-[#44474f] mb-2">
+        <label htmlFor="f-service" className="mb-2 block text-sm font-medium text-ink-soft">
           {formServiceLabel}
         </label>
         <select
-          name="service"
-          className="w-full bg-[#f0f4fb] border-none rounded-[10px] px-4 py-3 text-sm focus:ring-2 focus:ring-[#0061a2]/30 focus:bg-white transition-all outline-none"
+          id="f-service"
+            name="service"
+          className="field"
           required
         >
           <option value="">Select a service</option>
@@ -93,37 +96,40 @@ export default function AppointmentForm({
           ))}
         </select>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
-          <label className="block text-xs font-bold uppercase tracking-widest text-[#44474f] mb-2">
+          <label htmlFor="f-date" className="mb-2 block text-sm font-medium text-ink-soft">
             {formDateLabel}
           </label>
           <input
+            id="f-date"
             name="date"
-            className="w-full bg-[#f0f4fb] border-none rounded-[10px] px-4 py-3 text-sm focus:ring-2 focus:ring-[#0061a2]/30 focus:bg-white transition-all outline-none"
+            className="field"
             type="date"
             required
           />
         </div>
         <div>
-          <label className="block text-xs font-bold uppercase tracking-widest text-[#44474f] mb-2">
+          <label htmlFor="f-time" className="mb-2 block text-sm font-medium text-ink-soft">
             {formTimeLabel}
           </label>
           <input
+            id="f-time"
             name="time"
-            className="w-full bg-[#f0f4fb] border-none rounded-[10px] px-4 py-3 text-sm focus:ring-2 focus:ring-[#0061a2]/30 focus:bg-white transition-all outline-none"
+            className="field"
             type="time"
             required
           />
         </div>
       </div>
       <div>
-        <label className="block text-xs font-bold uppercase tracking-widest text-[#44474f] mb-2">
+        <label htmlFor="f-message" className="mb-2 block text-sm font-medium text-ink-soft">
           {formMessageLabel}
         </label>
         <textarea
-          name="message"
-          className="w-full bg-[#f0f4fb] border-none rounded-[10px] px-4 py-3 text-sm focus:ring-2 focus:ring-[#0061a2]/30 focus:bg-white transition-all outline-none"
+          id="f-message"
+            name="message"
+          className="field"
           placeholder={formMessagePlaceholder}
           rows={3}
         />
@@ -131,12 +137,12 @@ export default function AppointmentForm({
       <div className="flex flex-col gap-4 pt-4">
         <button
           type="submit"
-          className="bg-[#002452] text-white font-bold py-4 rounded-[10px] hover:bg-[#1b3a6b] transition-all"
+          className="btn btn-primary w-full"
         >
           {formSubmitText}
         </button>
         <a
-          className="bg-[#25D366] text-white font-bold py-4 rounded-[10px] flex items-center justify-center gap-2 hover:opacity-90 transition-all"
+          className="btn w-full bg-[#1faa59] text-white hover:bg-[#188a49]"
           href={`https://wa.me/${targetPhone}`}
           target="_blank"
           rel="noopener noreferrer"
